@@ -39,8 +39,6 @@ protected:
    map<WORLD::WorldAgentID,neighborMap::iterator> neigborAccessors;
 
 
-
-
    //todo write counting algorithm;
    //private functions
    virtual GOL::cordinate* YourNeighbors ( const GOL::cordinate &loc , const int &width ,
@@ -65,6 +63,7 @@ public:
       pThisGen = cordSetA;
       pNextGen = cordsetB;
       *pThisGen = start;
+
    }
 
 
@@ -106,24 +105,18 @@ public:
 
    //used to iterate over living cells and their Auroa (neighbor cells)
    // for( ; !world.NeighborCellsEnd() ; myCell = NextNeighbor() ){ }
-   bool NeighborCellsEnd (WORLD::WorldAgentID id);
-   GOL::cell NextNeighbor ();
-
-   //answer if there is a living cell in location
-   bool IsLiving ( const GOL::cordinate &loc );
-
-   //used to iterate over living cells
-   //currently don't plan to use, but I will make it available
    bool NeighborCellsEnd (WORLD::WorldAgentID id){
-      //if(neigborAccessors)
+      //if(neigborAccessors.)
+      //neigborAccessors.count(id);
 
    }
    GOL::cell NextNeighbor (WORLD::WorldAgentID id){
 
    }
-   //answer if there is a living cell in location
-   virtual bool IsLiving ( const GOL::cordinate &loc ){
 
+   //answer if there is a living cell in location
+   bool IsLiving ( const GOL::cordinate &loc ){
+      return pThisGen->count(loc);
    }
 
    //used to iterate over living cells

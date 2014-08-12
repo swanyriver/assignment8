@@ -109,6 +109,11 @@ int main () {
 
    generation(new int(2),new int(4));
 
+   map<WORLD::WorldAgentID,int> cellAccessors;
+   //map<WORLD::WorldAgentID,neighborMap::iterator> neigborAccessors;
+
+
+
 
    testWorldAccess *accessA = getID();
    testWorldAccess *accessB = getID();
