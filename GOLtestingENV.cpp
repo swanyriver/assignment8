@@ -14,8 +14,13 @@
 //#include "God.hpp"
 #include "GameOfLife.hpp"
 
-//#include <map>
-//#include <set>
+#include <map>
+#include <set>
+#include <utility>
+
+#include <stdexcept> //for catching out of range
+
+
 
 using namespace std;
 
@@ -70,7 +75,13 @@ int main () {
 
    //typedef set<GOL::cordinate,GOL::cordinate> cordset;
 
-   GOL::cordSet myset;
+
+   ///temporary to test int pointer
+   typedef std::set<GOL::cordinate,GOL::cordinate> cordSet;
+   typedef std::pair<GOL::cordinate,int*> NeighborCount;
+   typedef std::map<GOL::cordinate,int*,GOL::cordinate> neighborMap;
+
+   cordSet myset;
 
 
 
@@ -90,24 +101,41 @@ int main () {
    //myset.insert(GOL::cordinate(10,3));
 
 
-
-
-   GOL::cordSet::iterator it = myset.begin();
+   cordSet::iterator it = myset.begin();
 
    for(;it!=myset.end();it++){
       cout << it->x << "," << it->y << endl;
    }
 
-   GOL::neighborMap myMap;
+   neighborMap myMap;
 
-   myMap.insert(GOL::NeighborCount(GOL::GetCord(3,4),3));
-   myMap.insert(GOL::NeighborCount(GOL::GetCord(4,6),8));
-   myMap.insert(GOL::NeighborCount(GOL::GetCord(4,3),9));
+   myMap.insert(NeighborCount(GOL::GetCord(3,4),new int(3)));
+   myMap.insert(NeighborCount(GOL::GetCord(4,6),new int(4)));
+   myMap.insert(NeighborCount(GOL::GetCord(4,3),new int(5)));
 
-   GOL::neighborMap::iterator mt = myMap.begin();
+   //*myMap.at(GOL::GetCord(3,4))++;
+   cout << "there are " << myMap.count(GOL::GetCord(4,6)) << " 4,6" << endl;
+   cout << "there are " << myMap.count(GOL::GetCord(3,3)) << " 4,6" << endl;
+   cout << "location 3,4 has " << *myMap.at(GOL::GetCord(3,4)) << " neighbors" << endl;
+
+   //cout << "location 70,4 has " << myMap.at(GOL::GetCord(70,4)) << " neighbors" << endl;
+   //this terminates ofter throwing std::out_of_range
+
+   int neighbors;
+   try{
+      neighbors = *myMap.at(GOL::GetCord(70,4));
+   }catch(std::out_of_range){  //wow, this is a new approach!
+      neighbors = 0;
+   }
+
+   cout << "location 70,4 has " << neighbors << " neighbors" << endl;
+
+   cout << endl;
+
+   neighborMap::iterator mt = myMap.begin();
 
    for(; mt!= myMap.end(); mt++){
-      cout << mt->first.x << "/" << mt->first.y << "  nb:"<< mt->second << endl;
+      cout << mt->first.x << "/" << mt->first.y << "  nb:"<< *mt->second << endl;
    }
 
 

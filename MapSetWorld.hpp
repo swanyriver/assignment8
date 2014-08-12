@@ -18,6 +18,17 @@
 
 class MapSetWorld: public World{
 protected:
+
+   //typedefs
+   typedef std::set<GOL::cordinate,GOL::cordinate> cordSet;
+   typedef std::pair<GOL::cordinate,int*> NeighborCount;
+   typedef std::map<GOL::cordinate,int*,GOL::cordinate> neighborMap;
+
+
+   //member variables
+
+
+
    virtual GOL::cordinate* YourNeighbors ( const GOL::cordinate &loc , const int &width ,
             const int &height );
       //return [8] cords

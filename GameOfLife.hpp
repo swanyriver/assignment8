@@ -8,10 +8,6 @@
 #ifndef GAMEOFLIFE_HPP_
 #define GAMEOFLIFE_HPP_
 
-#include <set>
-#include <map>
-#include <utility>
-
 namespace GOL{
 
    struct cordinate{
@@ -50,20 +46,6 @@ namespace GOL{
       result.y = y;
       return result;
    }
-
-
-
-   ////////////////////////////////////////////
-   ////////Implementations specific below//////
-   ///////////////////////////////////////////
-
-   typedef std::pair<cordinate,int> NeighborCount;
-   /*NeighborCount getNbCount(cordinate loc, int numNb){
-      return
-   }*/
-
-   typedef std::set<cordinate,cordinate> cordSet;
-   typedef std::map<cordinate,int,cordinate> neighborMap;
 
 
 
