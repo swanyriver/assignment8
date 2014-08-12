@@ -23,6 +23,8 @@ protected:
    ( const GOL::cordinate &loc , const int &width , const int &height )=0;
    //return [8] cords
 
+   class WorldAgentIDVAL{};
+
 public:
    //////necesary conditions///////////
    /*
@@ -31,7 +33,12 @@ public:
     * next generations starts off blank
     *    (required to avoid the unchecked isolated cells persisting)
     *
+    * Access itterations must distinguish between various agents, via
+    * WorldAgentID
+    *
     */
+
+   typedef WorldAgentIDVAL* WorldAgentID;
 
    WORLD ( int width , int height , GOL::LivingCellStartSet start ) :
          WORLD_WIDTH( width ), WORLD_HEIGHT( height ),
@@ -50,19 +57,26 @@ public:
 
    //used to iterate over living cells and their Auroa (neighbor cells)
    // for( ; !world.NeighborCellsEnd() ; myCell = NextNeighbor() ){ }
-   virtual bool NeighborCellsEnd () = 0;
-   virtual GOL::cell NextNeighbor () = 0;
+   /*static WorldAgentID getNeighborAccessID(){
+      return new WorldAgentIDVAL;
+   }*/
+   virtual bool NeighborCellsEnd (WorldAgentID id) = 0;
+   virtual GOL::cell NextNeighbor (WorldAgentID id) = 0;
 
    //answer if there is a living cell in location
    virtual bool IsLiving ( const GOL::cordinate &loc )=0;
 
    //used to iterate over living cells
+   //next living cell or next living loc will share an itterator
+   static WorldAgentID getCellAccessID(){
+        return new WorldAgentIDVAL;
+   }
+   virtual bool LivingCellsEnd (WorldAgentID id) = 0;
    //currently don't plan to use, but I will make it available
-   virtual bool LivingCellsEnd () = 0;
-   virtual GOL::cell NextLivingCell () = 0;
+   virtual GOL::cell NextLivingCell (WorldAgentID id) = 0;
    //for display interface, interface on living set.
    virtual long int NumLiving()=0;
-   virtual GOL::cordinate NextLivingCellLoc() = 0;
+   virtual GOL::cordinate NextLivingCellLoc(WorldAgentID id) = 0;
 
    //called by Angel after Calculations
    virtual void Live ( const GOL::cordinate &loc )=0;

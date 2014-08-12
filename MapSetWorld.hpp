@@ -34,8 +34,10 @@ protected:
 
    neighborMap mNeigborNums;
 
-   //access iterator
-   cordSet::iterator mLivingIter;
+   //access iterators
+   map<WORLD::WorldAgentID,cordSet::iterator> cellAccessors;
+   map<WORLD::WorldAgentID,neighborMap::iterator> neigborAccessors;
+
 
 
 
@@ -104,7 +106,7 @@ public:
 
    //used to iterate over living cells and their Auroa (neighbor cells)
    // for( ; !world.NeighborCellsEnd() ; myCell = NextNeighbor() ){ }
-   bool NeighborCellsEnd ();
+   bool NeighborCellsEnd (WORLD::WorldAgentID id);
    GOL::cell NextNeighbor ();
 
    //answer if there is a living cell in location
@@ -112,22 +114,32 @@ public:
 
    //used to iterate over living cells
    //currently don't plan to use, but I will make it available
-   bool LivingCellsEnd (){ return (mLivingIter == pThisGen->end());}
-   GOL::cell NextLivingCell (){
-      GOL::cell result;
-      result.location;
+   bool NeighborCellsEnd (WORLD::WorldAgentID id){
+      //if(neigborAccessors)
 
-      ///trouble, if angel itererates over set then display
-      //each class interacting needs its own iterator
-      //todo work on this
    }
+   GOL::cell NextNeighbor (WORLD::WorldAgentID id){
+
+   }
+   //answer if there is a living cell in location
+   virtual bool IsLiving ( const GOL::cordinate &loc ){
+
+   }
+
+   //used to iterate over living cells
+   //next living cell or next living loc will share an itterator
+   WorldAgentID* getCellAccessID(){
+        return new WorldAgentID;
+   }
+   virtual bool LivingCellsEnd (WORLD::WorldAgentID id){}
+   //currently don't plan to use, but I will make it available
+   virtual GOL::cell NextLivingCell (WORLD::WorldAgentID id){}
    //for display interface, interface on living set.
-   long int NumLiving(){
+   virtual long int NumLiving(){
       return pThisGen->size();
    }
-   GOL::cordinate NextLivingCellLoc(){
-      //behavior after .end() undefined
-      return *mLivingIter++;
+   virtual GOL::cordinate NextLivingCellLoc(WORLD::WorldAgentID id) {
+
    }
 
    //called by Angel after Calculations

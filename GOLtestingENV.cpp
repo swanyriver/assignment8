@@ -10,9 +10,12 @@
 #include <string>
 #include <fstream>
 
-//#include "WorldTools.hpp"
-//#include "God.hpp"
+#include "WorldTools.hpp"
+#include "God.hpp"
+#include "Angel.hpp"
 #include "GameOfLife.hpp"
+
+#include "World.hpp"
 
 #include <map>
 #include <set>
@@ -67,7 +70,58 @@ using namespace std;
    }
 };*/
 
+class testWorldAccess{};
+
+testWorldAccess* getID(){
+   return new testWorldAccess;
+}
+
+int inta,intb;
+//testing generation switching
+void generation (int *pThisGen, int *pNextGen){
+
+   cout << "this:" << *pThisGen << " next:" << *pNextGen << endl;
+   cout << "this:" << pThisGen << " next:" << pNextGen << endl;
+
+   int *pTemp = pThisGen;
+   pThisGen = pNextGen;
+   pNextGen = pTemp;
+
+   cout << "~~~~~~~~~~~switched~~~~~~~~~~" << endl;
+
+   cout << "this:" << *pThisGen << " next:" << *pNextGen << endl;
+   cout << "this:" << pThisGen << " next:" << pNextGen << endl;
+
+
+
+   //todo double check this assignment
+
+}
+
 int main () {
+
+   //WORLD *myWorld;
+
+   //ANGELofLIFE myAngel(myWorld);
+
+   inta=5;
+   intb=7;
+
+   generation(new int(2),new int(4));
+
+
+   testWorldAccess *accessA = getID();
+   testWorldAccess *accessB = getID();
+
+   cout << "pointer a:" << accessA << endl;
+   cout << "pointer b value:" << accessB << endl;
+   cout << "they are " << ((accessA==accessB)? " equal": " not equal") << endl;
+   accessA=accessB;
+   cout << "after copy they are " << ((accessA==accessB)? " equal": " not equal") << endl;
+
+   ////maptesting
+   cout << "continue to map testing?";
+   getchar();
 
    //typedef set<GOL::cordinate, int, cordComp> coordSet;
 
@@ -151,6 +205,8 @@ int main () {
    for(; mt!= myMap.end(); mt++){
       cout << mt->first.x << "/" << mt->first.y << "  nb:"<< *mt->second << endl;
    }
+
+
 
 
 

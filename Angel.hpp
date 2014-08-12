@@ -14,18 +14,19 @@
 class ANGELofLIFE {
 private:
    WORLD *myWorld;
+   WORLD::WorldAgentID me;
 public:
 
    ANGELofLIFE ( WORLD *world ) :
-         myWorld( world ) {}
+         myWorld( world ) , me(WORLD::getCellAccessID()) {}
 
 
 
    virtual void ReapandSow () {
       GOL::cell myCell;
       //mark cells in next generation of world for life
-      for ( ; !myWorld->NeighborCellsEnd() ;
-            myCell = myWorld->NextNeighbor() ) {
+      for ( ; !myWorld->NeighborCellsEnd(me) ;
+            myCell = myWorld->NextNeighbor(me) ) {
          if ( myCell.alive ) {
             if ( myCell.numNeighbors == 2 )
                myWorld->Live( myCell.location );
