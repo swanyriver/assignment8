@@ -9,3 +9,7 @@ FUN*
 *.o
 
 template.cpp
+
+ToyLife.cpp
+
+TEST*
