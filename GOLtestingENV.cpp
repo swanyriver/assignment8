@@ -11,7 +11,7 @@
 #include <fstream>
 
 //#include "WorldTools.hpp"
-#include "God.hpp"
+//#include "God.hpp"
 #include "GameOfLife.hpp"
 
 #include <map>
@@ -129,6 +129,18 @@ int main () {
    }
 
    ++*myMap.at(GOL::GetCord(3,4)); //this will be the syntax for count
+
+   /*try{
+      ++*myMap.at(GOL::GetCord(3,4));
+   }catch(std::out_of_range){  //wow, this is a new approach!
+      myMap.insert(NeighborCount(GOL::GetCord(3,4),0));
+   }
+
+   try{
+      ++*myMap.at(GOL::GetCord(60,4));
+   }catch(std::out_of_range){  //wow, this is a new approach!
+      myMap.insert(NeighborCount(GOL::GetCord(60,4),0));
+   }*///doesnt work
 
    cout << "location 70,4 has " << neighbors << " neighbors" << endl;
 

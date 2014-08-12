@@ -15,27 +15,36 @@
 #include <map>
 #include <set>
 #include <utility>
+#include <iterator>
 
 class MapSetWorld: public World{
 protected:
 
    //typedefs
    typedef std::set<GOL::cordinate,GOL::cordinate> cordSet;
-   typedef std::pair<GOL::cordinate,int*> NeighborCount;
+   typedef std::pair<GOL::cordinate,int*> NbCountPair;
    typedef std::map<GOL::cordinate,int*,GOL::cordinate> neighborMap;
 
 
    //member variables
+   cordSet mLivingCellsA;
+   cordSet mLivingCellsB;
+   cordSet *pThisGen;
+   cordSet *pNextGen;
+
+   neighborMap mNeigborNums;
+
+   //access iterator
+   cordSet::iterator mLivingIter;
 
 
 
-
+   //todo write counting algorithm;
+   //private functions
    virtual GOL::cordinate* YourNeighbors ( const GOL::cordinate &loc , const int &width ,
             const int &height );
       //return [8] cords
-   virtual GOL::cordinate* YourNeighbors ( const GOL::cordinate &loc , const int &width ,
-         const int &height );
-   //return [8] cords
+
 
 public:
    //////necesary conditions///////////
@@ -50,15 +59,44 @@ public:
    MapSetWorld
    ( int width , int height , ostream outs , set<GOL::cordinate> start ) :
          World(width,height,start){
-      //assign start to be current gen, and then call count neighbors
+      //assign start to be current gen
+      pThisGen = cordSetA;
+      pNextGen = cordsetB;
+      *pThisGen = start;
    }
 
 
    ////////////////////////////
    //called by GOD ////////////
    ////////////////////////////
-   void generation (); ///switch generaton data set pointers
-   void CountNeighbors (); //mutator method, increments neighbor counts
+
+   //mutator method, increments neighbor counts
+   void CountNeighbors (){
+      for(cordSet::iterator st = *pThisGen.begin(); st!=*pThisGen.end();st++){
+         GOL::cordinate mooreNB[8] = YourNeighbors(*st);
+         for(int i=0; i<8; i++){ //increment all of the moore neighborhood
+            if(mNeigborNums.count(mooreNB[i])==1){
+               ++*mNeigborNums.at(mooreNB[i]);
+            }else{
+               mNeigborNums.insert(NbCountPair(mooreNB[i], new int(0)));
+            }
+         }
+      }
+   }
+
+   ///switch generaton data set pointers
+   void generation (){
+      cordSet *pTemp = pThisGen;
+      pThisGen = pNextGen;
+      pNextGen = pTemp;
+
+      pNextGen->clear();
+
+      mLivingIter = pThisGen->begin();
+
+      //todo double check this assignment
+
+   }
 
    ////////////////////////////
    //called by Angel//////////
@@ -74,16 +112,36 @@ public:
 
    //used to iterate over living cells
    //currently don't plan to use, but I will make it available
-   bool LivingCellsEnd ();
-   GOL::cell NextLivingCell ();
+   bool LivingCellsEnd (){ return (mLivingIter == pThisGen->end());}
+   GOL::cell NextLivingCell (){
+      GOL::cell result;
+      result.location;
+
+      ///trouble, if angel itererates over set then display
+      //each class interacting needs its own iterator
+      //todo work on this
+   }
    //for display interface, interface on living set.
-   long int NumLiving();
-   GOL::cordinate NextLivingCellLoc();
+   long int NumLiving(){
+      return pThisGen->size();
+   }
+   GOL::cordinate NextLivingCellLoc(){
+      //behavior after .end() undefined
+      return *mLivingIter++;
+   }
 
    //called by Angel after Calculations
-   void Live ( const GOL::cordinate &loc );
-   void Birth ( const GOL::cordinate &loc ); //under current design dupes Live
-   void Die ( const GOL::cordinate &loc );  //under current design does nothing
+   void Live ( const GOL::cordinate &loc ){
+      pNextGen->insert(loc);
+   }
+   void Birth ( const GOL::cordinate &loc ){
+      //duplicate behavior of life (for now)
+      Live(loc);
+   }
+
+   void Die ( const GOL::cordinate &loc ){
+      //intentionally left blank in this implementation
+   };
 
 };
 
