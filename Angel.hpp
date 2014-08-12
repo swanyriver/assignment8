@@ -8,15 +8,16 @@
 #ifndef ANGEL_HPP_
 #define ANGEL_HPP_
 
+#include "World.hpp"
+
 
 class ANGELofLIFE {
 private:
    WORLD *myWorld;
 public:
    ANGELofLIFE ( WORLD *world ) :
-         myWorld( world ) {
-   }
-   ;
+         myWorld( world ) {}
+
 
    virtual void ReapandSow () {
       GOL::cell myCell;

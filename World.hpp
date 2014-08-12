@@ -17,10 +17,11 @@ protected:
 
    const int WORLD_WIDTH;
    const int WORLD_HEIGHT;
-   //const ostream MY_OUTS;
 
-   virtual GOL::cordinate* YourNeighbors ( const GOL::cordinate &loc , const int &width ,
-         const int &height )=0;
+   set<GOL::cordinate> startLivingCells;
+
+   virtual GOL::cordinate* YourNeighbors
+   ( const GOL::cordinate &loc , const int &width , const int &height )=0;
    //return [8] cords
 
 public:
@@ -33,9 +34,9 @@ public:
     *
     */
 
-   WORLD ( int width , int height , ostream outs , set<GOL::cordinate> start ) :
-         WORLD_WIDTH( width ), WORLD_HEIGHT( height ) ////MY_OUTS(outs)
-   {};
+   WORLD ( int width , int height , set<GOL::cordinate> start ) :
+         WORLD_WIDTH( width ), WORLD_HEIGHT( height ),
+         startLivingCells(start){};
 
 
    ////////////////////////////
@@ -59,17 +60,15 @@ public:
    //used to iterate over living cells
    //currently don't plan to use, but I will make it available
    virtual bool LivingCellsEnd () = 0;
-   virtual GOL::cell NextCell () = 0;
+   virtual GOL::cell NextLivingCell () = 0;
+   //for display interface, interface on living set.
+   virtual long int NumLiving()=0;
+   virtual GOL::cordinate NextLivingCellLoc() = 0;
 
    //called by Angel after Calculations
    virtual void Live ( const GOL::cordinate &loc )=0;
    virtual void Birth ( const GOL::cordinate &loc )=0; //under current design dupes Live
    virtual void Die ( const GOL::cordinate &loc )=0;  //under current design does nothing
-
-   //////////////CALLED BY SOME I/O CONTROLLER////////////
-   virtual char** DisplayWorld()=0;
-   //or maybe
-   //friend ostream& operator << ( ostream &outs , const WORLD* &i );
 
 };
 

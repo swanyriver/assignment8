@@ -8,22 +8,32 @@
 #ifndef GOD_HPP_
 #define GOD_HPP_
 
+#include "WorldTools.hpp"
+#include "World.hpp"
+#include "Angel.hpp"
 
-class GOD {
+class God {
 private:
    WORLD *myWORLD;
-   ANGELofLIFE *myAngel;
+   ANGELofLIFE myAngel;
 public:
 
-   GOD ( WorldBuilder *creator );
+   God ( WorldBuilder *creator ){
+      myWORLD = creator->buildWord();
+      myAngel = ANGELofLIFE(myWORLD);
+   }
 
    void Generation () {
 
       myWORLD->CountNeighbors();
-      myAngel->ReapandSow();
-      myWORLD->generation();
+      myAngel.ReapandSow();
+      myWORLD->generation();  //might need to be split
 
       //output,  who instigates?
+   }
+
+   WorldDisplayInterface GetWorldDisplayInt(){
+      return WorldDisplayInterface(myWORLD);
    }
 };
 
