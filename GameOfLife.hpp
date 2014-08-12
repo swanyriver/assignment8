@@ -8,13 +8,18 @@
 #ifndef GAMEOFLIFE_HPP_
 #define GAMEOFLIFE_HPP_
 
+#include <set>
+#include <map>
+#include <utility>
+
 namespace GOL{
 
    struct cordinate{
       int x,y;
 
-      bool operator() ( const GOL::cordinate &lhs ,
-            const GOL::cordinate &rhs ) const {
+
+      bool operator() ( const cordinate &lhs ,
+            const cordinate &rhs ) const {
          //lhs<rhs return true > return false
          //coords are sorted with y highest priority to facilitate console output
 
@@ -38,6 +43,30 @@ namespace GOL{
       cordinate location;
       int numNeighbors;
    };
+
+   cordinate GetCord(int x, int y){
+      cordinate result;
+      result.x = x;
+      result.y = y;
+      return result;
+   }
+
+
+
+   ////////////////////////////////////////////
+   ////////Implementations specific below//////
+   ///////////////////////////////////////////
+
+   typedef std::pair<cordinate,int> NeighborCount;
+   /*NeighborCount getNbCount(cordinate loc, int numNb){
+      return
+   }*/
+
+   typedef std::set<cordinate,cordinate> cordSet;
+   typedef std::map<cordinate,int,cordinate> neighborMap;
+
+
+
 };
 
 

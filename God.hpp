@@ -27,9 +27,7 @@ public:
 
       myWORLD->CountNeighbors();
       myAngel.ReapandSow();
-      myWORLD->generation();  //might need to be split
-
-      //output,  who instigates?
+      myWORLD->generation();
    }
 
    WorldDisplayInterface GetWorldDisplayInt(){

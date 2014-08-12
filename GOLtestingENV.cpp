@@ -14,8 +14,8 @@
 //#include "God.hpp"
 #include "GameOfLife.hpp"
 
-#include <map>
-#include <set>
+//#include <map>
+//#include <set>
 
 using namespace std;
 
@@ -68,9 +68,9 @@ int main () {
 
    //coordSet mySet;
 
-   typedef set<GOL::cordinate,GOL::cordinate> cordset;
+   //typedef set<GOL::cordinate,GOL::cordinate> cordset;
 
-   cordset myset;
+   GOL::cordSet myset;
 
 
 
@@ -87,13 +87,29 @@ int main () {
    myset.insert(d);
    myset.insert(e);
    myset.insert(f);
+   //myset.insert(GOL::cordinate(10,3));
 
 
-   cordset::iterator it = myset.begin();
+
+
+   GOL::cordSet::iterator it = myset.begin();
 
    for(;it!=myset.end();it++){
       cout << it->x << "," << it->y << endl;
    }
+
+   GOL::neighborMap myMap;
+
+   myMap.insert(GOL::NeighborCount(GOL::GetCord(3,4),3));
+   myMap.insert(GOL::NeighborCount(GOL::GetCord(4,6),8));
+   myMap.insert(GOL::NeighborCount(GOL::GetCord(4,3),9));
+
+   GOL::neighborMap::iterator mt = myMap.begin();
+
+   for(; mt!= myMap.end(); mt++){
+      cout << mt->first.x << "/" << mt->first.y << "  nb:"<< mt->second << endl;
+   }
+
 
 
 }
