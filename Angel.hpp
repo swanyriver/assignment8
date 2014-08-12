@@ -15,8 +15,10 @@ class ANGELofLIFE {
 private:
    WORLD *myWorld;
 public:
+
    ANGELofLIFE ( WORLD *world ) :
          myWorld( world ) {}
+
 
 
    virtual void ReapandSow () {
@@ -25,12 +27,12 @@ public:
       for ( ; !myWorld->NeighborCellsEnd() ;
             myCell = myWorld->NextNeighbor() ) {
          if ( myCell.alive ) {
-            if ( myCell.neighbors == 2 )
+            if ( myCell.numNeighbors == 2 )
                myWorld->Live( myCell.location );
             else
                myWorld->Die( myCell.location );
          } else { //not living cell
-            if ( myCell.neighbors == 3 )
+            if ( myCell.numNeighbors == 3 )
                myWorld->Birth( myCell.location );
          }
       }

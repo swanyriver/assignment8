@@ -10,7 +10,6 @@
 
 #include "GameOfLife.hpp"
 
-
 class WORLD {
 
 protected:
@@ -18,7 +17,7 @@ protected:
    const int WORLD_WIDTH;
    const int WORLD_HEIGHT;
 
-   set<GOL::cordinate> startLivingCells;
+   GOL::LivingCellStartSet startLivingCells;
 
    virtual GOL::cordinate* YourNeighbors
    ( const GOL::cordinate &loc , const int &width , const int &height )=0;
@@ -34,7 +33,7 @@ public:
     *
     */
 
-   WORLD ( int width , int height , set<GOL::cordinate> start ) :
+   WORLD ( int width , int height , GOL::LivingCellStartSet start ) :
          WORLD_WIDTH( width ), WORLD_HEIGHT( height ),
          startLivingCells(start){};
 

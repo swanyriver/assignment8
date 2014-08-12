@@ -8,6 +8,8 @@
 #ifndef GAMEOFLIFE_HPP_
 #define GAMEOFLIFE_HPP_
 
+#include <set>
+
 namespace GOL{
 
    struct cordinate{
@@ -46,6 +48,8 @@ namespace GOL{
       result.y = y;
       return result;
    }
+
+   typedef std::set<GOL::cordinate,GOL::cordinate> LivingCellStartSet;
 
 
 

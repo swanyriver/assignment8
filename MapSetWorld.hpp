@@ -29,6 +29,7 @@ protected:
 
 
 
+
    virtual GOL::cordinate* YourNeighbors ( const GOL::cordinate &loc , const int &width ,
             const int &height );
       //return [8] cords

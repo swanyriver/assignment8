@@ -15,18 +15,19 @@
 class God {
 private:
    WORLD *myWORLD;
-   ANGELofLIFE myAngel;
+   ANGELofLIFE *myAngel;
 public:
 
    God ( WorldBuilder *creator ){
       myWORLD = creator->buildWord();
-      myAngel = ANGELofLIFE(myWORLD);
+      myAngel = new ANGELofLIFE(myWORLD);
+
    }
 
    void Generation () {
 
       myWORLD->CountNeighbors();
-      myAngel.ReapandSow();
+      myAngel->ReapandSow();
       myWORLD->generation();
    }
 
