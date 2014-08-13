@@ -70,16 +70,16 @@ public:
       //y increases downward
 
       //row 1
-      mooreNB[0].x = (loc.x-1)%width; mooreNB[0].y = (loc.y-1)%height;
-      mooreNB[1].x = loc.x; mooreNB[1].y = (loc.y-1)%height;
-      mooreNB[2].x = (loc.x+1)%width; mooreNB[2].y = (loc.y-1)%height;
+      mooreNB[0].x = (loc.x+width-1)%width; mooreNB[0].y = (loc.y+height-1)%height;
+      mooreNB[1].x = loc.x; mooreNB[1].y = (loc.y+height-1)%height;
+      mooreNB[2].x = (loc.x+1)%width; mooreNB[2].y = (loc.y+height-1)%height;
 
       //row 2
-      mooreNB[3].x = (loc.x-1)%width; mooreNB[3].y = loc.y;
+      mooreNB[3].x = (loc.x+width-1)%width; mooreNB[3].y = loc.y;
       mooreNB[4].x = (loc.x+1)%width; mooreNB[4].y = loc.y;
 
       //row 3
-      mooreNB[5].x = (loc.x-1)%width; mooreNB[5].y = (loc.y+1)%height;
+      mooreNB[5].x = (loc.x+width-1)%width; mooreNB[5].y = (loc.y+1)%height;
       mooreNB[6].x = loc.x; mooreNB[6].y = (loc.y+1)%height;
       mooreNB[7].x = (loc.x+1)%width; mooreNB[7].y = (loc.y+1)%height;
 
