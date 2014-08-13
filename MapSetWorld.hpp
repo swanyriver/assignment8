@@ -9,6 +9,8 @@
 #define MAPSETWORLD_HPP_
 
 #include "World.hpp"
+#include "MpSWorldINTERFACES.hpp"
+#include "WorldTools.hpp"
 #include "God.hpp"
 #include "GameOfLife.hpp"
 
@@ -17,7 +19,11 @@
 #include <utility>
 #include <iterator>
 
-class MapSetWorld: public World{
+
+
+class MapSetWorld: public WORLD{
+   friend class MpSWorldDisplay;
+   friend class MpSWorldReap;
 protected:
 
    //typedefs
@@ -33,10 +39,6 @@ protected:
    cordSet *pNextGen;
 
    neighborMap mNeigborNums;
-
-   //access iterators
-   map<WORLD::WorldAgentID,cordSet::iterator> cellAccessors;
-   map<WORLD::WorldAgentID,neighborMap::iterator> neigborAccessors;
 
 
    //todo write counting algorithm;
@@ -105,14 +107,16 @@ public:
 
    //used to iterate over living cells and their Auroa (neighbor cells)
    // for( ; !world.NeighborCellsEnd() ; myCell = NextNeighbor() ){ }
-   bool NeighborCellsEnd (WORLD::WorldAgentID id){
+
+   bool NeighborCellsEnd (){
       //if(neigborAccessors.)
       //neigborAccessors.count(id);
 
    }
-   GOL::cell NextNeighbor (WORLD::WorldAgentID id){
+   GOL::cell NextNeighbor (){
 
    }
+
 
    //answer if there is a living cell in location
    bool IsLiving ( const GOL::cordinate &loc ){
@@ -121,17 +125,20 @@ public:
 
    //used to iterate over living cells
    //next living cell or next living loc will share an itterator
-   WorldAgentID* getCellAccessID(){
-        return new WorldAgentID;
+   bool LivingCellsEnd (){
+      if(neigborAccessors.count(id)){
+
+      }else{
+         return true;
+      }
    }
-   virtual bool LivingCellsEnd (WORLD::WorldAgentID id){}
    //currently don't plan to use, but I will make it available
-   virtual GOL::cell NextLivingCell (WORLD::WorldAgentID id){}
+   virtual GOL::cell NextLivingCell (){}
    //for display interface, interface on living set.
    virtual long int NumLiving(){
       return pThisGen->size();
    }
-   virtual GOL::cordinate NextLivingCellLoc(WORLD::WorldAgentID id) {
+   virtual GOL::cordinate NextLivingCellLoc() {
 
    }
 
@@ -149,5 +156,7 @@ public:
    };
 
 };
+
+
 
 #endif /* MAPSETWORLD_HPP_ */

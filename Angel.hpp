@@ -8,16 +8,15 @@
 #ifndef ANGEL_HPP_
 #define ANGEL_HPP_
 
-#include "World.hpp"
+#include "WorldTools.hpp"
 
 
 class ANGELofLIFE {
 private:
-   WORLD *myWorld;
-   WORLD::WorldAgentID me;
+   WorldReapingInterface *myWorld;
 public:
 
-   ANGELofLIFE ( WORLD *world ) :
+   ANGELofLIFE ( WorldReapingInterface *world ) :
          myWorld( world ) , me(WORLD::getCellAccessID()) {}
 
 
@@ -25,8 +24,8 @@ public:
    virtual void ReapandSow () {
       GOL::cell myCell;
       //mark cells in next generation of world for life
-      for ( ; !myWorld->NeighborCellsEnd(me) ;
-            myCell = myWorld->NextNeighbor(me) ) {
+      for ( myWorld->NeighborCellBegin(); !myWorld->NeighborCellsEnd() ;
+            myCell = myWorld->NextNeighbor() ) {
          if ( myCell.alive ) {
             if ( myCell.numNeighbors == 2 )
                myWorld->Live( myCell.location );
@@ -38,6 +37,9 @@ public:
          }
       }
    }
+
+   //possibly faster to decide death for all !2 && !3 then check for life
+   //opens up to itterating over all possible locations though
 
 };
 

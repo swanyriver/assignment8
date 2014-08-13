@@ -20,7 +20,7 @@ public:
 
    God ( WorldBuilder *creator ){
       myWORLD = creator->buildWord();
-      myAngel = new ANGELofLIFE(myWORLD);
+      myAngel = new ANGELofLIFE(myWORLD->GetReapingInterface());
 
    }
 
@@ -31,8 +31,8 @@ public:
       myWORLD->generation();
    }
 
-   WorldDisplayInterface GetWorldDisplayInt(){
-      return WorldDisplayInterface(myWORLD);
+   WorldDisplayInterface* GetWorldDisplayInt(){
+      return myWORLD->GetDisplayInterface();
    }
 };
 

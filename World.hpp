@@ -9,6 +9,7 @@
 #define WORLD_HPP_
 
 #include "GameOfLife.hpp"
+#include "WorldTools.hpp"
 
 class WORLD {
 
@@ -44,25 +45,14 @@ public:
    virtual void generation () = 0; ///switch generaton data set pointers
    virtual void CountNeighbors ()=0; //mutator method, increments neighbor counts
 
+   //factory methods
+   virtual WorldDisplayInterface* GetDisplayInterface() = 0;
+   virtual WorldReapingInterface* GetReapingInterface() = 0;
+
    ////////////////////////////
    //called by Angel//////////
    ////////////////////////////
 
-   //used to iterate over living cells and their Auroa (neighbor cells)
-   // for( ; !world.NeighborCellsEnd() ; myCell = NextNeighbor() ){ }
-   virtual bool NeighborCellsEnd () = 0;
-   virtual GOL::cell NextNeighbor () = 0;
-
-   //answer if there is a living cell in location
-   virtual bool IsLiving ( const GOL::cordinate &loc )=0;
-
-   //used to iterate over living cells
-   //currently don't plan to use, but I will make it available
-   virtual bool LivingCellsEnd () = 0;
-   virtual GOL::cell NextLivingCell () = 0;
-   //for display interface, interface on living set.
-   virtual long int NumLiving()=0;
-   virtual GOL::cordinate NextLivingCellLoc() = 0;
 
    //called by Angel after Calculations
    virtual void Live ( const GOL::cordinate &loc )=0;

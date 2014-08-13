@@ -11,26 +11,48 @@
 #include "GameOfLife.hpp"
 #include "World.hpp"
 
-class WorldDisplayInterface{
-private:
-   WORLD *outputWorld;
-   WORLD::WorldAgentID me;
+/*
+ * ALL SUBCLASSES OF WORLD MUST HAVE AN IMPLEMENTATION OF
+ *    -WorldDisplayInterface
+ *    -WorldReapingInterface
+ *    -WorldBuilder
+ */
 
+class WorldDisplayInterface{
+   //private mSubclassWorld,  pass in on construction
+   //each instance need to itterate seperatly
 public:
 
-
-   WorldDisplayInterface(WORLD *world):outputWorld(world),
-         me(WORLD::getCellAccessID()){};
-
    //used to iterate over living cells
-   bool LivingCellsEnd (){
-      return outputWorld->LivingCellsEnd(me);
+   virtual bool LivingCellsEnd ()=0;
+   virtual void LivingCellBegin() = 0;
+   virtual GOL::cordinate NextLivingCellLoc()= 0;
+   virtual long int NumLiving() = 0;
+
+
+
+};
+
+class WorldReapingInterface{
+private:
+   WORLD *mWorld;
+   //private mSubclassWorld,  pass in on construction
+public:
+
+   WorldReapingInterface(WORLD *world):mWorld(world){};
+
+   virtual void NeighborCellBegin() = 0;
+   virtual bool NeighborCellsEnd () = 0;
+   virtual GOL::cell NextNeighbor () = 0;
+
+   void Live ( const GOL::cordinate &loc ){
+      mWorld->Live(loc);
    }
-   GOL::cordinate NextLivingCellLoc(){
-      return outputWorld->NextLivingCellLoc(me);
+   void Birth ( const GOL::cordinate &loc ){
+      mWorld->Birth(loc);
    }
-   long int NumLiving(){
-      return outputWorld->NumLiving();
+   void Die ( const GOL::cordinate &loc ){
+      mWorld->Die(loc);
    }
 
 };
