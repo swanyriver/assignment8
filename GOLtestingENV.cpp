@@ -125,8 +125,8 @@ int main () {
 
       cout << "neighbors of " << tests[var].x << "/" << tests[var].y << endl;
 
-      GOL::cordinate *neighbors =
-            MapSetWorld::YourNeighbors(tests[var],10,10);
+      GOL::cordinate neighbors[8];
+      MapSetWorld::YourNeighbors(tests[var],neighbors,10,10);
 
       //MapSetWorld myWorld(10,10,)
 
@@ -167,7 +167,7 @@ int main () {
 }
 
 void MapTesting(){
-   //WORLD *myWorld;
+   /*//WORLD *myWorld;
 
    //ANGELofLIFE myAngel(myWorld);
 
@@ -182,7 +182,7 @@ void MapTesting(){
 
 
 
-  /* testWorldAccess *accessA = getID();
+   testWorldAccess *accessA = getID();
    testWorldAccess *accessB = getID();
 
    cout << "pointer a:" << accessA << endl;
@@ -190,7 +190,7 @@ void MapTesting(){
    cout << "they are " << ((accessA==accessB)? " equal": " not equal") << endl;
    accessA=accessB;
    cout << "after copy they are " << ((accessA==accessB)? " equal": " not equal") << endl;
-*/
+
    ////maptesting
    //cout << "continue to map testing?";
    //getchar();
@@ -256,7 +256,7 @@ void MapTesting(){
 
    ++*myMap.at(GOL::GetCord(3,4)); //this will be the syntax for count
 
-   /*try{
+   try{
       ++*myMap.at(GOL::GetCord(3,4));
    }catch(std::out_of_range){  //wow, this is a new approach!
       myMap.insert(NeighborCount(GOL::GetCord(3,4),0));
@@ -266,7 +266,7 @@ void MapTesting(){
       ++*myMap.at(GOL::GetCord(60,4));
    }catch(std::out_of_range){  //wow, this is a new approach!
       myMap.insert(NeighborCount(GOL::GetCord(60,4),0));
-   }*///doesnt work
+   }//doesnt work
 
    cout << "location 70,4 has " << neighbors << " neighbors" << endl;
 
@@ -276,7 +276,7 @@ void MapTesting(){
 
    for(; mt!= myMap.end(); mt++){
       cout << mt->first.x << "/" << mt->first.y << "  nb:"<< *mt->second << endl;
-   }
+   }*/
 }
 
 

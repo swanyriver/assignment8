@@ -33,8 +33,8 @@ protected:
 
    //typedefs
    typedef std::set<GOL::cordinate,GOL::cordinate> cordSet;
-   typedef std::pair<GOL::cordinate,int*> NbCountPair;
-   typedef std::map<GOL::cordinate,int*,GOL::cordinate> neighborMap;
+   typedef std::pair<GOL::cordinate,int> NbCountPair;
+   typedef std::map<GOL::cordinate,int,GOL::cordinate> neighborMap;
 
 
    //member variables
@@ -61,11 +61,10 @@ public:
 
    //used internally, but does not depend on internal state, so made static
    //for ease of testing and re-usability.
-   static GOL::cordinate* YourNeighbors
-   ( const GOL::cordinate &loc , const int &width, const int &height ){
+   static void YourNeighbors ( const GOL::cordinate &loc ,
+         GOL::cordinate mooreNB[],
+         const int &width, const int &height ){
       //return [8] cords
-      //todo implement
-      GOL::cordinate *mooreNB = new GOL::cordinate[8];
       //order changed to match print/set-sort order
       //y increases downward
 
@@ -83,7 +82,6 @@ public:
       mooreNB[6].x = loc.x; mooreNB[6].y = (loc.y+1)%height;
       mooreNB[7].x = (loc.x+1)%width; mooreNB[7].y = (loc.y+1)%height;
 
-      return mooreNB;
    }
    ////////////////////////////
    //called by GOD ////////////
@@ -91,14 +89,22 @@ public:
 
    //mutator method, increments neighbor counts
    void CountNeighbors (){
+      mNeigborNums.clear();
+
+      GOL::cordinate mooreNB[8];
+
       for(cordSet::iterator st = pThisGen->begin(); st!=pThisGen->end();st++){
-         GOL::cordinate *mooreNB = YourNeighbors(*st,this->WORLD_HEIGHT,this->WORLD_HEIGHT);
+         //todo change to a passed in array, avoid extra memory allocation
+         YourNeighbors(*st,mooreNB,this->WORLD_HEIGHT,this->WORLD_HEIGHT);
+
          for(int i=0; i<8; i++){ //increment all of the moore neighborhood
-            if(mNeigborNums.count(mooreNB[i])==1){
-               ++*mNeigborNums.at(mooreNB[i]);
-            }else{
-               mNeigborNums.insert(NbCountPair(mooreNB[i], new int(0)));
-            }
+            //insertion is only successful if key not already in map
+            //if key(cord) exist in map, retuned iterator points to value
+            //this indicates a cell with at least one other neighbor
+            pair<neighborMap::iterator,bool> element =
+                  mNeigborNums.insert(NbCountPair(mooreNB[i], 0));
+            //new element made to 1, or element incremented
+            *(element.first)++;
          }
       }
    }
@@ -168,7 +174,7 @@ public:
    virtual GOL::cell NextNeighbor (){
       GOL::cell result;
       result.location=mNbLookUp->first;
-      result.numNeighbors = *(mNbLookUp->second);
+      result.numNeighbors = mNbLookUp->second;
       result.alive = mpsWorld->pThisGen->count(mNbLookUp->first);
       mNbLookUp++;
       return result;
