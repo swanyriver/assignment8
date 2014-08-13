@@ -18,7 +18,6 @@
 #include "World.hpp"
 
 #include "MapSetWorld.hpp"
-#include "MpSWorldINTERFACES.hpp"
 
 #include <map>
 #include <set>

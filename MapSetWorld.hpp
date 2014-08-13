@@ -9,7 +9,6 @@
 #define MAPSETWORLD_HPP_
 
 #include "World.hpp"
-//#include "MpSWorldINTERFACES.hpp"
 #include "WorldTools.hpp"
 #include "God.hpp"
 #include "GameOfLife.hpp"
@@ -47,10 +46,22 @@ protected:
 
    //todo write counting algorithm;
    //private functions
-   virtual GOL::cordinate* YourNeighbors
+   GOL::cordinate* YourNeighbors
    ( const GOL::cordinate &loc , const int &width, const int &height ){
       //return [8] cords
       //todo implement
+      GOL::cordinate mooreNB[8];
+      //starting above and then clockwise //y increases downward
+      mooreNB[0].x = loc.x; mooreNB[0].y = (loc.y-1)%height;
+      mooreNB[1].x = (loc.x+1)%width; mooreNB[1].y = (loc.y-1)%height;
+      mooreNB[2].x = (loc.x+1)%width; mooreNB[2].y = loc.y;
+      mooreNB[3].x = (loc.x+1)%width; mooreNB[3].y = (loc.y+1)%height;
+      mooreNB[4].x = loc.x+1; mooreNB[4].y = (loc.y+1)%height;
+      mooreNB[5].x = (loc.x-1)%width; mooreNB[5].y = (loc.y+1)%height;
+      mooreNB[6].x = (loc.x-1)%width; mooreNB[6].y = loc.y;
+      mooreNB[7].x = (loc.x-1)%width; mooreNB[7].y = (loc.y-1)%height;
+
+      return mooreNB; //adress of local returned //what to do //todo
    }
 
 
@@ -83,14 +94,14 @@ public:
    //mutator method, increments neighbor counts
    void CountNeighbors (){
       for(cordSet::iterator st = pThisGen->begin(); st!=pThisGen->end();st++){
-         /*GOL::cordinate *mooreNB = YourNeighbors(*st,this->WORLD_HEIGHT,this->WORLD_HEIGHT);
+         GOL::cordinate *mooreNB = YourNeighbors(*st,this->WORLD_HEIGHT,this->WORLD_HEIGHT);
          for(int i=0; i<8; i++){ //increment all of the moore neighborhood
             if(mNeigborNums.count(mooreNB[i])==1){
                ++*mNeigborNums.at(mooreNB[i]);
             }else{
                mNeigborNums.insert(NbCountPair(mooreNB[i], new int(0)));
             }
-         }*/ //todo figure out out to return the array
+         }
       }
    }
 
@@ -117,6 +128,13 @@ public:
       //intentionally left blank in this implementation
    };
 
+   //factory methods //todo incomplete type, forward declaration
+   /*WorldDisplayInterface* GetDisplayInterface(){
+      return new MpSWorldDisplay(this);
+   }
+   WorldReapingInterface* GetReapingInterface(){
+      return new MpSWorldReap(this,this);
+   }*/
 };
 
 class MpSWorldDisplay: public WorldDisplayInterface{
