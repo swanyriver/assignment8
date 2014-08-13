@@ -18,10 +18,12 @@
 #include <utility>
 #include <iterator>
 
-class MpSWorldDisplay;
-class MpSWorldReap;
+
 
 using namespace std;
+
+class MpSWorldDisplay;
+class MpSWorldReap;
 
 
 class MapSetWorld: public WORLD{
@@ -50,7 +52,7 @@ protected:
    ( const GOL::cordinate &loc , const int &width, const int &height ){
       //return [8] cords
       //todo implement
-      GOL::cordinate mooreNB[8];
+      GOL::cordinate *mooreNB = new GOL::cordinate[8];
       //starting above and then clockwise //y increases downward
       mooreNB[0].x = loc.x; mooreNB[0].y = (loc.y-1)%height;
       mooreNB[1].x = (loc.x+1)%width; mooreNB[1].y = (loc.y-1)%height;
@@ -129,12 +131,8 @@ public:
    };
 
    //factory methods //todo incomplete type, forward declaration
-   /*WorldDisplayInterface* GetDisplayInterface(){
-      return new MpSWorldDisplay(this);
-   }
-   WorldReapingInterface* GetReapingInterface(){
-      return new MpSWorldReap(this,this);
-   }*/
+   WorldDisplayInterface* GetDisplayInterface();
+   WorldReapingInterface* GetReapingInterface();
 };
 
 class MpSWorldDisplay: public WorldDisplayInterface{
@@ -190,6 +188,13 @@ public:
       mWorld->Die(loc);
    }
 };
+
+WorldDisplayInterface* MapSetWorld::GetDisplayInterface(){
+   return new MpSWorldDisplay(this);
+}
+WorldReapingInterface* MapSetWorld::GetReapingInterface(){
+   return new MpSWorldReap(this,this);
+}
 
 
 
