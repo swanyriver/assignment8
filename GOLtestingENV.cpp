@@ -106,12 +106,34 @@ int main () {
 
    //MapTesting();
 
-   //testing MooreNB function
-   GOL::cordinate *neighbors =
-         MapSetWorld::YourNeighbors(GOL::GetCord(3,4),10,10);
+   //test cases
+   GOL::cordinate tests[5] = {
+         GOL::GetCord(3,4),
+         GOL::GetCord(2,2),
+         GOL::GetCord(9,9),
+         GOL::GetCord(4,0),
+         GOL::GetCord(0,0)
+   };
 
-   for(int i=0;i<8;i++){
-      cout << neighbors[i].x << "/" << neighbors[i].y << endl;
+   //testing MooreNB function
+
+   cout << "testing neighbor calculation in a 10by10 zero counting (0-9) world"
+         << "\nY axis increases downward for ease of print out"
+         << "cordinates form: x/y" << endl << endl;
+
+   for (int var = 0; var < 5; ++var) {
+
+      cout << "neighbors of " << tests[var].x << "/" << tests[var].y << endl;
+
+      GOL::cordinate *neighbors =
+            MapSetWorld::YourNeighbors(tests[var],10,10);
+
+      for(int i=0;i<8;i++){
+         cout << neighbors[i].x << "/" << neighbors[i].y << "  ";
+         if(i==2||i==4) cout << endl;
+         if(i==3) cout << "     ";
+      }
+      cout << endl << endl;
    }
 
 }
