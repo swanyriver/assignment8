@@ -17,7 +17,7 @@ private:
 public:
 
    ANGELofLIFE ( WorldReapingInterface *world ) :
-         myWorld( world ) , me(WORLD::getCellAccessID()) {}
+         myWorld( world ) {}
 
 
 

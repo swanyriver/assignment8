@@ -9,7 +9,9 @@
 #define WORLD_HPP_
 
 #include "GameOfLife.hpp"
-#include "WorldTools.hpp"
+
+class WorldDisplayInterface;
+class WorldReapingInterface;
 
 class WORLD {
 
@@ -21,7 +23,9 @@ protected:
    GOL::LivingCellStartSet startLivingCells;
 
    virtual GOL::cordinate* YourNeighbors
-   ( const GOL::cordinate &loc , const int &width , const int &height )=0;
+      ( const GOL::cordinate &loc ,
+            const int &width,
+            const int &height )=0;
    //return [8] cords
 
 public:

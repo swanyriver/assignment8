@@ -34,7 +34,7 @@ public:
 };
 
 class WorldReapingInterface{
-private:
+protected:
    WORLD *mWorld;
    //private mSubclassWorld,  pass in on construction
 public:

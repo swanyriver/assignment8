@@ -17,6 +17,9 @@
 
 #include "World.hpp"
 
+#include "MapSetWorld.hpp"
+#include "MpSWorldINTERFACES.hpp"
+
 #include <map>
 #include <set>
 #include <utility>
@@ -70,11 +73,11 @@ using namespace std;
    }
 };*/
 
-class testWorldAccess{};
+/*class testWorldAccess{};
 
 testWorldAccess* getID(){
    return new testWorldAccess;
-}
+}*/
 
 int inta,intb;
 //testing generation switching
@@ -109,13 +112,13 @@ int main () {
 
    generation(new int(2),new int(4));
 
-   map<WORLD::WorldAgentID,int> cellAccessors;
+   //map<WORLD::WorldAgentID,int> cellAccessors;
    //map<WORLD::WorldAgentID,neighborMap::iterator> neigborAccessors;
 
 
 
 
-   testWorldAccess *accessA = getID();
+  /* testWorldAccess *accessA = getID();
    testWorldAccess *accessB = getID();
 
    cout << "pointer a:" << accessA << endl;
@@ -123,7 +126,7 @@ int main () {
    cout << "they are " << ((accessA==accessB)? " equal": " not equal") << endl;
    accessA=accessB;
    cout << "after copy they are " << ((accessA==accessB)? " equal": " not equal") << endl;
-
+*/
    ////maptesting
    cout << "continue to map testing?";
    getchar();
