@@ -1,0 +1,73 @@
+testing neighbor calculation in a 10by10 zero counting (0-9) world
+Y axis increases downward for ease of print outcordinates form: x/y
+
+neighbors of 3/4
+----------
+
+
+
+  ###
+  # #
+  ###
+
+
+
+
+----------
+
+neighbors of 2/2
+----------
+
+ ###
+ # #
+ ###
+
+
+
+
+
+
+----------
+
+neighbors of 9/9
+----------
+#       ##
+
+
+
+
+
+
+
+#       ##
+#       #
+----------
+
+neighbors of 4/0
+----------
+   # #
+   ###
+
+
+
+
+
+
+
+   ###
+----------
+
+neighbors of 0/0
+----------
+ #       #
+##       #
+
+
+
+
+
+
+
+##       #
+----------
+

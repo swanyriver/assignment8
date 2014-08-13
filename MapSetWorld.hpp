@@ -126,7 +126,7 @@ public:
       //intentionally left blank in this implementation
    };
 
-   //factory methods //todo incomplete type, forward declaration
+   //factory methods
    WorldDisplayInterface* GetDisplayInterface();
    WorldReapingInterface* GetReapingInterface();
 };

@@ -128,12 +128,38 @@ int main () {
       GOL::cordinate *neighbors =
             MapSetWorld::YourNeighbors(tests[var],10,10);
 
-      for(int i=0;i<8;i++){
+      /*for(int i=0;i<8;i++){
          cout << neighbors[i].x << "/" << neighbors[i].y << "  ";
          if(i==2||i==4) cout << endl;
          if(i==3) cout << "     ";
+      }*/
+      typedef std::set<GOL::cordinate,GOL::cordinate> cordSet;
+      cordSet sortedCords;
+      //graphical output
+      //sortedCords.insert(tests[var]); //to display considerd cell
+      for(int i=0;i<8;i++){
+         sortedCords.insert(neighbors[i]);
       }
-      cout << endl << endl;
+
+      //this format should work,  todo move to final implementation
+      string output;
+      GOL::cordinate lastCord = GOL::GetCord(-1,0);
+      output.append(10,'-'); output+='\n';
+      for(cordSet::iterator it= sortedCords.begin(); it!= sortedCords.end(); it++){
+         if(it->y>lastCord.y){
+            output.append(it->y-lastCord.y,'\n');
+            lastCord.x=-1;
+         }
+         output.append((it->x-lastCord.x-1),' ');
+         output+="#";
+         lastCord = *it;
+
+      }
+
+      output.append(10-lastCord.y,'\n'); //always at least 1
+
+      output.append(10,'-');
+      cout << output << endl << endl;
    }
 
 }
