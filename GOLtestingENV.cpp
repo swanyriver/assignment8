@@ -128,6 +128,8 @@ int main () {
       GOL::cordinate *neighbors =
             MapSetWorld::YourNeighbors(tests[var],10,10);
 
+      //MapSetWorld myWorld(10,10,)
+
       /*for(int i=0;i<8;i++){
          cout << neighbors[i].x << "/" << neighbors[i].y << "  ";
          if(i==2||i==4) cout << endl;
@@ -276,3 +278,24 @@ void MapTesting(){
       cout << mt->first.x << "/" << mt->first.y << "  nb:"<< *mt->second << endl;
    }
 }
+
+
+/***********************************************************
+ * OUTPUT ALGORITHM
+ *
+//this format should work,  todo move to final implementation
+   string output;
+   GOL::cordinate lastCord = GOL::GetCord(-1,0);
+   for(cordSet::iterator it= sortedCords.begin(); it!= sortedCords.end(); it++){
+      if(it->y>lastCord.y){
+         output.append(it->y-lastCord.y,'\n');
+         lastCord.x=-1;
+      }
+      output.append((it->x-lastCord.x-1),' ');
+      output+="#";
+      lastCord = *it;
+
+   }
+
+   output.append(10-lastCord.y,'\n'); //always at least 1
+ */
