@@ -100,8 +100,23 @@ void generation (int *pThisGen, int *pNextGen){
 
 }
 
+void MapTesting();
+
 int main () {
 
+   //MapTesting();
+
+   //testing MooreNB function
+   GOL::cordinate *neighbors =
+         MapSetWorld::YourNeighbors(GOL::GetCord(3,4),10,10);
+
+   for(int i=0;i<8;i++){
+      cout << neighbors[i].x << "/" << neighbors[i].y << endl;
+   }
+
+}
+
+void MapTesting(){
    //WORLD *myWorld;
 
    //ANGELofLIFE myAngel(myWorld);
@@ -127,8 +142,8 @@ int main () {
    cout << "after copy they are " << ((accessA==accessB)? " equal": " not equal") << endl;
 */
    ////maptesting
-   cout << "continue to map testing?";
-   getchar();
+   //cout << "continue to map testing?";
+   //getchar();
 
    //typedef set<GOL::cordinate, int, cordComp> coordSet;
 
@@ -212,9 +227,4 @@ int main () {
    for(; mt!= myMap.end(); mt++){
       cout << mt->first.x << "/" << mt->first.y << "  nb:"<< *mt->second << endl;
    }
-
-
-
-
-
 }

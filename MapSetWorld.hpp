@@ -45,10 +45,23 @@ protected:
 
    neighborMap mNeigborNums;
 
+public:
 
-   //todo write counting algorithm;
-   //private functions
-   GOL::cordinate* YourNeighbors
+
+
+   MapSetWorld
+   ( int width , int height , GOL::LivingCellStartSet start ) :
+         WORLD(width,height,start){
+      //assign start to be current gen
+      pThisGen = &mLivingCellsA;
+      pNextGen = &mLivingCellsB;
+      *pThisGen = start;
+
+   }
+
+   //used internally, but does not depend on internal state, so made static
+   //for ease of testing and re-usability.
+   static GOL::cordinate* YourNeighbors
    ( const GOL::cordinate &loc , const int &width, const int &height ){
       //return [8] cords
       //todo implement
@@ -63,32 +76,8 @@ protected:
       mooreNB[6].x = (loc.x-1)%width; mooreNB[6].y = loc.y;
       mooreNB[7].x = (loc.x-1)%width; mooreNB[7].y = (loc.y-1)%height;
 
-      return mooreNB; //adress of local returned //what to do //todo
+      return mooreNB;
    }
-
-
-
-public:
-   //////necesary conditions///////////
-   /*
-    * 2 Generations tracked,
-    * living is mapped onto next generation
-    * next generations starts off blank
-    *    (required to avoid the unchecked isolated cells persisting)
-    *
-    */
-
-   MapSetWorld
-   ( int width , int height , GOL::LivingCellStartSet start ) :
-         WORLD(width,height,start){
-      //assign start to be current gen
-      pThisGen = &mLivingCellsA;
-      pNextGen = &mLivingCellsB;
-      *pThisGen = start;
-
-   }
-
-
    ////////////////////////////
    //called by GOD ////////////
    ////////////////////////////
