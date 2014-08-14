@@ -17,14 +17,12 @@
 #include <set>
 #include <utility>
 #include <iterator>
-
-
+#include <cassert>
 
 using namespace std;
 
 class MpSWorldDisplay;
 class MpSWorldReap;
-
 
 class MapSetWorld: public WORLD{
    friend class MpSWorldDisplay;
@@ -83,6 +81,13 @@ public:
       mooreNB[7].x = (loc.x+1)%width; mooreNB[7].y = (loc.y+1)%height;
 
    }
+private:
+   void YourNeighbors ( const GOL::cordinate &loc , GOL::cordinate mooreNB[]){
+      MapSetWorld::YourNeighbors
+         (loc,mooreNB,this->WORLD_WIDTH,this->WORLD_HEIGHT);
+   }
+
+public:
    ////////////////////////////
    //called by GOD ////////////
    ////////////////////////////
@@ -104,7 +109,8 @@ public:
             pair<neighborMap::iterator,bool> element =
                   mNeigborNums.insert(NbCountPair(mooreNB[i], 0));
             //new element made to 1, or element incremented
-            *(element.first)++;
+            //*(element.first)=1;
+            element.first->second++;
          }
       }
    }
@@ -177,6 +183,9 @@ public:
       result.numNeighbors = mNbLookUp->second;
       result.alive = mpsWorld->pThisGen->count(mNbLookUp->first);
       mNbLookUp++;
+
+      assert(result.numNeighbors<9);
+
       return result;
    }
 
@@ -190,6 +199,9 @@ public:
       mWorld->Die(loc);
    }
 };
+
+//todo make mapset worldbuilder
+//todo seperate world factory from LivingSetGeneration
 
 WorldDisplayInterface* MapSetWorld::GetDisplayInterface(){
    return new MpSWorldDisplay(this);
