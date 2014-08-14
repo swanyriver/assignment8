@@ -70,6 +70,7 @@ protected:
 public:
    WorldBuilder ( int width , int height, GOL::LivingCellStartSet inStart  ) :
          WORLD_WIDTH( width ), WORLD_HEIGHT( height ), start(inStart) {
+      //todo implement two methods for out of bounds start set, WRAP or PRUNE, pass in t/f default PRUNE
    }
    virtual WORLD* buildWord () = 0;
 };

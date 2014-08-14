@@ -24,8 +24,9 @@ public:
    virtual void ReapandSow () {
       GOL::cell myCell;
       //mark cells in next generation of world for life
-      for ( myWorld->NeighborCellBegin(); !myWorld->NeighborCellsEnd() ;
-            myCell = myWorld->NextNeighbor() ) {
+      myWorld->NeighborCellBegin();
+      while (  !myWorld->NeighborCellsEnd()){
+         myCell = myWorld->NextNeighbor();
          if ( myCell.alive ) {
             if ( myCell.numNeighbors == 2 || myCell.numNeighbors == 3)
                myWorld->Live( myCell.location );
