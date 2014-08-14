@@ -27,7 +27,7 @@ public:
       for ( myWorld->NeighborCellBegin(); !myWorld->NeighborCellsEnd() ;
             myCell = myWorld->NextNeighbor() ) {
          if ( myCell.alive ) {
-            if ( myCell.numNeighbors == 2 )
+            if ( myCell.numNeighbors == 2 || myCell.numNeighbors == 3)
                myWorld->Live( myCell.location );
             else
                myWorld->Die( myCell.location );
