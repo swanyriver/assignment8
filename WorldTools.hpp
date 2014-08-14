@@ -57,15 +57,19 @@ public:
 
 };
 
-
+//only delivers constructed world to GOD, needs same arguments
+//as abstract world class, allows for additional conditions for specific
+//implementations and for the sole posesions of a world instance by the
+//god controller.
 class WorldBuilder {
 protected:
    const int WORLD_WIDTH;
    const int WORLD_HEIGHT;
+   const GOL::LivingCellStartSet start;
 
 public:
-   WorldBuilder ( int width , int height ) :
-         WORLD_WIDTH( width ), WORLD_HEIGHT( height ) {
+   WorldBuilder ( int width , int height, GOL::LivingCellStartSet inStart  ) :
+         WORLD_WIDTH( width ), WORLD_HEIGHT( height ), start(inStart) {
    }
    virtual WORLD* buildWord () = 0;
 };

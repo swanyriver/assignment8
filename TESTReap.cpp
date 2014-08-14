@@ -10,16 +10,21 @@
 #include "MapSetWorld.hpp"
 #include "GameOfLife.hpp"
 #include "SwansonLibs/swansonString.hpp"
+#include "SwansonLibs/swansonInput.hpp"
+#include "Angel.hpp"
 #include <string>
 
 string outputWorld ( GOL::LivingCellStartSet &cells , int height );
+string outputWorldINT ( WorldDisplayInterface* display , int height );
 string outputNeighbors ( WorldReapingInterface *lAngel , int height );
+
+const int WORLD_SIZE = 10;
 
 int main () {
 
    GOL::LivingCellStartSet start;
 
-   cout << "test case b" << endl;
+
 
    start.insert( GOL::GetCord( 0 , 0 ) );
    start.insert( GOL::GetCord( 4 , 4 ) );
@@ -32,23 +37,43 @@ int main () {
 
    //start world
    string output;
-   output.append(10,'-'); output+='\n';
-   output+= outputWorld( start , 10 );
-   output.append(10,'-'); output+='\n';
+   cout << "Starting World" << endl;
+   output.append(WORLD_SIZE,'-'); output+='\n';
+   output+= outputWorld( start , WORLD_SIZE );
+   output.append(WORLD_SIZE,'-'); output+='\n';
    cout << output;
 
 
-   MapSetWorld myWorld( 10 , 10 , start );
+   MapSetWorld myWorld( WORLD_SIZE , WORLD_SIZE , start );
    WorldReapingInterface *angel = myWorld.GetReapingInterface();
+   ANGELofLIFE *RealAngel = new ANGELofLIFE(angel);
+   WorldDisplayInterface *display = myWorld.GetDisplayInterface();
 
-   myWorld.CountNeighbors();
+   int generation = 0;
 
-   cout << endl << "neighbor number " << endl;
-   output.clear();
-   output.append(10,'-'); output+='\n';
-   output+= outputNeighbors(angel,10);
-   output.append(10,'-'); output+='\n';
-   cout << output;
+   do {
+
+      myWorld.CountNeighbors();
+
+      cout << endl << "neighbor number " << endl;
+      output.clear();
+      output.append(WORLD_SIZE,'-'); output+='\n';
+      output+= outputNeighbors(angel,WORLD_SIZE);
+      output.append(WORLD_SIZE,'-'); output+='\n';
+      cout << output;
+
+      RealAngel->ReapandSow();
+      myWorld.generation();
+      generation++;
+
+      cout << "generation " << generation << endl;
+      output.clear();
+      output.append(WORLD_SIZE,'-'); output+='\n';
+      output+= outputWorldINT( display , WORLD_SIZE );
+      output.append(WORLD_SIZE,'-'); output+='\n';
+      cout << output;
+
+   } while (swansonInput::yesNo("keep going"));
 
 }
 
@@ -70,11 +95,31 @@ string outputWorld ( GOL::LivingCellStartSet &cells , int height ) {
    return output;
 }
 
+string outputWorldINT ( WorldDisplayInterface* display , int height ){
+   string output;
+   GOL::cordinate lastCord = GOL::GetCord( -1 , 0 );
+   display->LivingCellBegin();
+   while ( !display->LivingCellsEnd()) {
+      GOL::cordinate nextCord = display->NextLivingCellLoc();
+      if ( nextCord.y > lastCord.y ) {
+         output.append( nextCord.y - lastCord.y , '\n' );
+         lastCord.x = -1;
+      }
+      output.append( (nextCord.x - lastCord.x - 1) , ' ' );
+      output += "#";
+      lastCord = nextCord;
+
+   }
+   output.append( height - lastCord.y , '\n' ); //always at least 1
+   return output;
+}
+
 string outputNeighbors ( WorldReapingInterface *lAngel , int height ) {
    string output;
    //GOL::cell nextCell;
    GOL::cordinate lastCord = GOL::GetCord( -1 , 0 );
-   for ( lAngel->NeighborCellBegin(); !lAngel->NeighborCellsEnd() ;) {
+   lAngel->NeighborCellBegin();
+   while (  !lAngel->NeighborCellsEnd() ) {
       GOL::cell nextCell = lAngel->NextNeighbor();
       if ( nextCell.location.y > lastCord.y ) {
          output.append( nextCell.location.y - lastCord.y , '\n' );
