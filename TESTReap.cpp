@@ -22,7 +22,7 @@ string outputWorld ( GOL::LivingCellStartSet &cells , int height );
 string outputWorldINT ( WorldDisplayInterface* display , int height );
 string outputNeighbors ( WorldReapingInterface *lAngel , int height );
 
-const int WORLD_SIZE = 15;
+const int WORLD_SIZE = 30;
 
 int main () {
 
@@ -55,12 +55,13 @@ int main () {
 
    //myWalker.getSet(start, cin);
 
-   string startString = Walker::glider;
-   startString+="ssssdd" + Walker::glider + "!";
+   //string startString = Walker::glider;
+   //startString+="ssssdd" + Walker::glider + "!";
 
    //istringstream myIstream(startString);
    //myWalker.getSet(start, myIstream);
-   myWalker.getSet(start, startString);
+   //myWalker.getSet(start, startString);
+   myWalker.getSet(start, RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,50));
 
 
 
