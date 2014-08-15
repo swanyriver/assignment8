@@ -19,9 +19,6 @@ string outputWorldINT ( WorldDisplayInterface* display ,
 
 int main(){
 
-   cout << Walker::glider;
-   swansonInput::yesNo("huh");
-
    swansonUtil::SeedRandom();
 
    GOL::LivingCellStartSet genesis;
@@ -31,13 +28,19 @@ int main(){
    myCreator.getSet(genesis,RandomWalker::GetWalkString(max,SATURATION),
          WORLD_WIDTH/2,WORLD_HEIGHT/2);
 
+   genesis.clear();
+   myCreator.getGliderWorld(genesis);
+   cout << "we have gotten the glider world" << endl;
+
    God myGod(new MpSWorldBuilder(WORLD_WIDTH,WORLD_HEIGHT,genesis));
 
    WorldDisplayInterface *VoiceOfGod = myGod.GetWorldDisplayInt();
 
    while(true){
       swansonUtil::ClearScreen(); //todo change to pointer for -s simple
-      cout << outputWorldINT(VoiceOfGod) << endl;
+      //todo why is it not clearing the screen
+      cout << outputWorldINT(VoiceOfGod) << endl
+            << "GENERATIONS PASSED:" << myGod.GenerationsPassed();
       getchar();
       myGod.Generation();
    }
