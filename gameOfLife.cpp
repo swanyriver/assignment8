@@ -12,7 +12,7 @@
 
 const int WORLD_WIDTH = 80;
 const int WORLD_HEIGHT = 22;
-const float SATURATION = .5f;
+const float SATURATION = .3f;
 
 string outputWorldINT ( WorldDisplayInterface* display ,
       int height = WORLD_HEIGHT );
@@ -25,7 +25,8 @@ int main(){
 
    Walker myCreator(WORLD_WIDTH,WORLD_HEIGHT);
    int max = WORLD_HEIGHT*WORLD_WIDTH;
-   myCreator.getSet(genesis,RandomWalker::GetWalkString(max,SATURATION));
+   myCreator.getSet(genesis,RandomWalker::GetWalkString(max,SATURATION),
+         WORLD_WIDTH/2,WORLD_HEIGHT/2);
 
    God myGod(new MpSWorldBuilder(WORLD_WIDTH,WORLD_HEIGHT,genesis));
 
@@ -34,7 +35,6 @@ int main(){
    while(true){
       swansonUtil::ClearScreen(); //todo change to pointer for -s simple
       cout << outputWorldINT(VoiceOfGod) << endl;
-      //swansonInput::yesNo("contine");
       getchar();
       myGod.Generation();
    }

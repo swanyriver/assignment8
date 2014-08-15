@@ -79,11 +79,12 @@ public:
 
    }
 
-   void getSet ( GOL::LivingCellStartSet &cellSet, std::istream &myStream ) {
+   void getSet ( GOL::LivingCellStartSet &cellSet, std::istream &myStream,
+         int startx = 0 , int starty = 0) {
 
       char nextchar;
 
-      GOL::cordinate position = GOL::GetCord( 0 , 0 );
+      GOL::cordinate position = GOL::GetCord( startx , starty );
 
       while ( nextchar != terminate ) {
          myStream >> nextchar;
@@ -134,9 +135,10 @@ public:
       }//end of while
    }//end of function
 
-   void getSet ( GOL::LivingCellStartSet &cellSet, string input ) {
+   void getSet ( GOL::LivingCellStartSet &cellSet, string input,
+         int startx = 0 , int starty = 0 ) {
       istringstream mystream(input);
-      getSet(cellSet,mystream);
+      getSet(cellSet,mystream, startx, starty);
    }
 };
 
