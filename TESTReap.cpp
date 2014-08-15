@@ -13,6 +13,7 @@
 #include "SwansonLibs/swansonInput.hpp"
 #include "GOL/Angel.hpp"
 #include <string>
+#include <sstream>
 
 #include "GOL/WalkerMaker.hpp"
 
@@ -21,7 +22,7 @@ string outputWorld ( GOL::LivingCellStartSet &cells , int height );
 string outputWorldINT ( WorldDisplayInterface* display , int height );
 string outputNeighbors ( WorldReapingInterface *lAngel , int height );
 
-const int WORLD_SIZE = 8;
+const int WORLD_SIZE = 15;
 
 int main () {
 
@@ -37,6 +38,7 @@ int main () {
    start.insert( GOL::GetCord( 5 , 5 ) );
    start.insert( GOL::GetCord( 7 , 5 ) );
 */
+   //values to be pruned
    start.insert( GOL::GetCord( 9 , 4 ) );
    start.insert( GOL::GetCord( 0 , 20 ) );
 
@@ -51,13 +53,16 @@ int main () {
 
    cout << "getting set" << endl;
 
-   myWalker.getSet(start);
+   //myWalker.getSet(start, cin);
 
-   cout << "function exited" << endl;
+   string startString = Walker::glider;
+   startString+="ssssdd" + Walker::glider + "!";
 
-   swansonInput::yesNo("continue");
+   //istringstream myIstream(startString);
+   //myWalker.getSet(start, myIstream);
+   myWalker.getSet(start, startString);
 
-   cout << "set gotten size:" << start.size() << endl;
+
 
 
 

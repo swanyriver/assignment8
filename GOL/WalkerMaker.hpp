@@ -13,7 +13,9 @@
 #include <set>
 #include <utility>
 #include <istream>
+#include <sstream>
 #include "../SwansonLibs/swansonString.hpp"
+#include "../SwansonLibs/swansonUtils.hpp"
 
 #include <iostream>
 
@@ -35,8 +37,7 @@ private:
    static const int SW = 'z';
    static const int NE = 'e';
    static const int SE = 'c';
-   static const int upper = 'a' - 'A';
-   static const char terminate = '!';
+
 
    void up ( GOL::cordinate &pos ) {
       pos.y = (pos.y + WORLD_HEIGHT - 1) % WORLD_HEIGHT;
@@ -52,6 +53,12 @@ private:
    }
 
 public:
+
+   static const int upper = 'a' - 'A';
+   static const char terminate = '!';
+
+   static const char inputChars[];
+   static const string glider;
 
    Walker ( int width , int height ) :
          WORLD_WIDTH( width ), WORLD_HEIGHT( height ) {
@@ -69,28 +76,17 @@ public:
             it++ ) {
          inputKeys.insert( *it - upper );
       }
-      for ( set<char>::iterator it = inputKeys.begin() ; it != inputKeys.end() ;
-            it++ ) {
-         cout << *it << " ";
-      }
-      cout << endl;
 
    }
-   ;
 
-   void getSet ( GOL::LivingCellStartSet &cellSet ) {
+   void getSet ( GOL::LivingCellStartSet &cellSet, std::istream &myStream ) {
 
       char nextchar;
 
       GOL::cordinate position = GOL::GetCord( 0 , 0 );
 
       while ( nextchar != terminate ) {
-         cin >> nextchar;
-         cout << "in:" << nextchar;
-         /*if(nextchar==terminate){
-          cout << "breaking" << endl;
-          break;
-          }*/
+         myStream >> nextchar;
 
          if ( inputKeys.count( nextchar ) ) {
             bool cursorOn = (nextchar < 'a');
@@ -131,36 +127,70 @@ public:
             }
 
             if ( cursorOn ){
-               cout << " cursor on ";
-               //GOL::cordinate *inCord = new GOL::cordinate;
-               //*inCord = position;
-               //cellSet->insert( GOL::GetCord( position.x , position.y ) );
-               //cellSet->insert( *(new GOL::cordinate{position.x,position.y}) );
-               //cellSet->insert( *inCord );
                cellSet.insert(position);
             }
 
-            cout << "cellsNum:" << cellSet.size() << " updated position:" <<
-                  position.x << "/" << position.y << endl;
-
          } //end of if
       }//end of while
-      cout <<endl << endl << "cellsNum:" << cellSet.size();
-      cout << "function exiting" << endl;
    }//end of function
+
+   void getSet ( GOL::LivingCellStartSet &cellSet, string input ) {
+      istringstream mystream(input);
+      getSet(cellSet,mystream);
+   }
 };
 
-//const char Walker::North = 'w';
-/*
- const char Walker::South = 's';
- const char Walker::West = 'a';
- const char Walker::East = 'd';
- const char Walker::NW = 'q';
- const char Walker::SW = 'z';
- const char Walker::NE = 'e';
- const char Walker::SE = 'c';
- const int Walker::upper = 'A' - 'a';
- const char Walker::terminate = '!';
- */
+const char Walker::inputChars[] = {North,South,West,East,SW,SE,NW,NE};
+const string Walker::glider = "WCSAA";
+
+
+class RandomWalker{
+private:
+   static const float DEFAULT_CLUSTERING;
+
+   static string Walk(int &cellNumber, float clustering){
+      char nextStep = Walker::inputChars[swansonUtil::GetRandomInRange(7)];
+      if(swansonUtil::GetRandomInRange(100)>(clustering*100)){
+         nextStep -= Walker::upper;
+         cellNumber++;
+      }
+      return swansonString::GetString(nextStep);
+   }
+
+public:
+   static string GetWalkString(int maxCells, float saturation,
+         float clustring = RandomWalker::DEFAULT_CLUSTERING){
+      string walkStr;
+      int cellNumber = 0;
+      int saturationNumber = maxCells * saturation;
+      while(cellNumber<saturationNumber){
+         walkStr += Walk(cellNumber,clustring);
+      }
+
+      walkStr += swansonString::GetString(Walker::terminate);
+      return walkStr;
+
+
+   }
+   static string GetWalkString(int maxCells, int steps,
+         float clustring = RandomWalker::DEFAULT_CLUSTERING){
+      string walkStr;
+      int cellNumber = 0;
+      int takenSteps = 0;
+
+      while(takenSteps<steps && cellNumber<maxCells){
+         walkStr += Walk(cellNumber,clustring);
+         takenSteps++;
+      }
+      walkStr += swansonString::GetString(Walker::terminate);
+      return walkStr;
+
+   }
+
+
+};
+
+const float RandomWalker::DEFAULT_CLUSTERING = .5;
+
 
 #endif /* WALKERMAKER_HPP_ */
