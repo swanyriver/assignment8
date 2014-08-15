@@ -40,7 +40,7 @@ int main () {
    start.insert( GOL::GetCord( 9 , 4 ) );
    start.insert( GOL::GetCord( 0 , 20 ) );
 
-   int generationCount;
+   int generationCount=15;
    /*cin >> generationCount;
    int pos;
    while(std::cin>>pos && std::cin.peek()!='\n'){
@@ -49,7 +49,15 @@ int main () {
 
    Walker myWalker(WORLD_SIZE,WORLD_SIZE);
 
-   //myWalker.getSet(cin,start);
+   cout << "getting set" << endl;
+
+   myWalker.getSet(start);
+
+   cout << "function exited" << endl;
+
+   swansonInput::yesNo("continue");
+
+   cout << "set gotten size:" << start.size() << endl;
 
 
 
