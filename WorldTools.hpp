@@ -65,12 +65,21 @@ class WorldBuilder {
 protected:
    const int WORLD_WIDTH;
    const int WORLD_HEIGHT;
-   const GOL::LivingCellStartSet start;
+   GOL::LivingCellStartSet start;
 
 public:
-   WorldBuilder ( int width , int height, GOL::LivingCellStartSet inStart  ) :
+   WorldBuilder ( int width , int height, GOL::LivingCellStartSet &inStart  ) :
          WORLD_WIDTH( width ), WORLD_HEIGHT( height ), start(inStart) {
-      //todo implement two methods for out of bounds start set, WRAP or PRUNE, pass in t/f default PRUNE
+      //todo implement two methods for out of bounds start set, WRAP or PRUNE,
+      //pass in t/f default PRUNE
+
+      //prune fix
+      for(GOL::LivingCellStartSet::iterator it = start.begin();
+            it!=start.end(); it++){
+         if(it->x>=WORLD_WIDTH || it->y>=WORLD_HEIGHT){
+            start.erase(it);
+         }
+      }
    }
    virtual WORLD* buildWord () = 0;
 };

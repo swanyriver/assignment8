@@ -35,6 +35,9 @@ int main () {
    start.insert( GOL::GetCord( 5 , 5 ) );
    start.insert( GOL::GetCord( 7 , 5 ) );
 */
+   start.insert( GOL::GetCord( 9 , 4 ) );
+   start.insert( GOL::GetCord( 0 , 20 ) );
+
    int generationCount;
    cin >> generationCount;
    int pos;
@@ -44,25 +47,34 @@ int main () {
 
 
    //start world
-   string output;
+  /* string output;
    cout << "Starting World" << endl;
    output.append(WORLD_SIZE,'-'); output+='\n';
    output+= outputWorld( start , WORLD_SIZE );
    output.append(WORLD_SIZE,'-'); output+='\n';
+   cout << output;*/
+
+   WorldBuilder *myBuilder = new MpSWorldBuilder(WORLD_SIZE,WORLD_SIZE,start);
+   //WORLD *myWorld = myBuilder->buildWord();
+   God myGod(myBuilder);
+
+   //MapSetWorld myWorld( WORLD_SIZE , WORLD_SIZE , start );
+   //WorldReapingInterface *angel = myWorld->GetReapingInterface();
+   //ANGELofLIFE *RealAngel = new ANGELofLIFE(angel);
+   //WorldDisplayInterface *display = myWorld->GetDisplayInterface();
+
+   WorldDisplayInterface *display = myGod.GetWorldDisplayInt();
+
+   string output;
+   output.append(WORLD_SIZE,'-'); output+='\n';
+   output+= outputWorldINT( display , WORLD_SIZE );
+   output.append(WORLD_SIZE,'-'); output+='\n';
    cout << output;
-
-
-   MapSetWorld myWorld( WORLD_SIZE , WORLD_SIZE , start );
-   WorldReapingInterface *angel = myWorld.GetReapingInterface();
-   ANGELofLIFE *RealAngel = new ANGELofLIFE(angel);
-   WorldDisplayInterface *display = myWorld.GetDisplayInterface();
-
-
 
 
    for(int generation = 2; generation <= generationCount ; generation++) {
 
-      myWorld.CountNeighbors();
+      /*myWorld->CountNeighbors();
 
       cout << endl << "neighbor number " << endl;
       output.clear();
@@ -75,8 +87,8 @@ int main () {
          cout << "here is the problem" << endl;
       }
 
-      RealAngel->ReapandSow();
-      myWorld.generation();
+      RealAngel->ReapandSow();*/
+      myGod.Generation();
 
       cout << "generation " << generation << " living cells:"
             << display->NumLiving() << endl ;

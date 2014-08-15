@@ -201,7 +201,16 @@ public:
 };
 
 //todo make mapset worldbuilder
-//todo seperate world factory from LivingSetGeneration
+class MpSWorldBuilder: public WorldBuilder{
+public:
+   MpSWorldBuilder( int width , int height, GOL::LivingCellStartSet &inStart ):
+      WorldBuilder(width,height,inStart){};
+
+   WORLD* buildWord (){
+      return new MapSetWorld(this->WORLD_WIDTH,this->WORLD_HEIGHT,this->start);
+   }
+
+};
 
 WorldDisplayInterface* MapSetWorld::GetDisplayInterface(){
    return new MpSWorldDisplay(this);
