@@ -6,13 +6,15 @@
  */
 
 #include<iostream>
-#include "WorldTools.hpp"
-#include "MapSetWorld.hpp"
-#include "GameOfLife.hpp"
+#include "GOL/WorldTools.hpp"
+#include "GOL/MapSetWorld.hpp"
+#include "GOL/GameOfLife.hpp"
 #include "SwansonLibs/swansonString.hpp"
 #include "SwansonLibs/swansonInput.hpp"
-#include "Angel.hpp"
+#include "GOL/Angel.hpp"
 #include <string>
+
+#include "GOL/WalkerMaker.hpp"
 
 
 string outputWorld ( GOL::LivingCellStartSet &cells , int height );
@@ -39,11 +41,16 @@ int main () {
    start.insert( GOL::GetCord( 0 , 20 ) );
 
    int generationCount;
-   cin >> generationCount;
+   /*cin >> generationCount;
    int pos;
    while(std::cin>>pos && std::cin.peek()!='\n'){
       start.insert( GOL::GetCord( pos/10 , pos%10 ) );
-   }
+   }*/
+
+   Walker myWalker(WORLD_SIZE,WORLD_SIZE);
+
+   //myWalker.getSet(cin,start);
+
 
 
    //start world
