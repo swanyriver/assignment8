@@ -19,6 +19,9 @@
 #include <iterator>
 #include <cassert>
 
+#include <iostream>
+#include <cstdio>
+
 using namespace std;
 
 class MpSWorldDisplay;
@@ -80,6 +83,7 @@ public:
       mooreNB[6].x = loc.x; mooreNB[6].y = (loc.y+1)%height;
       mooreNB[7].x = (loc.x+1)%width; mooreNB[7].y = (loc.y+1)%height;
 
+
    }
 private:
    void YourNeighbors ( const GOL::cordinate &loc , GOL::cordinate mooreNB[]){
@@ -100,7 +104,7 @@ public:
 
       for(cordSet::iterator st = pThisGen->begin(); st!=pThisGen->end();st++){
          //todo change to a passed in array, avoid extra memory allocation
-         YourNeighbors(*st,mooreNB,this->WORLD_HEIGHT,this->WORLD_HEIGHT);
+         YourNeighbors(*st,mooreNB);
 
          for(int i=0; i<8; i++){ //increment all of the moore neighborhood
             //insertion is only successful if key not already in map
@@ -111,6 +115,7 @@ public:
             //new element made to 1, or element incremented
             //*(element.first)=1;
             element.first->second++;
+
          }
       }
    }
