@@ -19,6 +19,9 @@ string outputWorldINT ( WorldDisplayInterface* display ,
 
 int main(){
 
+   cout << Walker::glider;
+   swansonInput::yesNo("huh");
+
    swansonUtil::SeedRandom();
 
    GOL::LivingCellStartSet genesis;

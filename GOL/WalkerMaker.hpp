@@ -29,14 +29,7 @@ private:
 
    const int WORLD_WIDTH, WORLD_HEIGHT;
 
-   static const int North = 'w';
-   static const int South = 's';
-   static const int West = 'a';
-   static const int East = 'd';
-   static const int NW = 'q';
-   static const int SW = 'z';
-   static const int NE = 'e';
-   static const int SE = 'c';
+
 
 
    void up ( GOL::cordinate &pos ) {
@@ -54,11 +47,21 @@ private:
 
 public:
 
+   static const int North = 'w';
+   static const int South = 's';
+   static const int West = 'a';
+   static const int East = 'd';
+   static const int NW = 'q';
+   static const int SW = 'z';
+   static const int NE = 'e';
+   static const int SE = 'c';
+
    static const int upper = 'a' - 'A';
    static const char terminate = '!';
 
    static const char inputChars[];
    static const string glider;
+   //todo add glider width and height
 
    Walker ( int width , int height ) :
          WORLD_WIDTH( width ), WORLD_HEIGHT( height ) {
@@ -144,6 +147,9 @@ public:
 
 const char Walker::inputChars[] = {North,South,West,East,SW,SE,NW,NE};
 const string Walker::glider = "WCSAA";
+const string Walker::glider = swansonString::UpperCase(
+      string(Walker::SE) + string(Walker::SE) + string(Walker::East) +
+      string(Walker::North) + string(Walker::North));
 
 
 class RandomWalker{
