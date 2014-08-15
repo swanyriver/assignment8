@@ -61,7 +61,23 @@ int main () {
    //istringstream myIstream(startString);
    //myWalker.getSet(start, myIstream);
    //myWalker.getSet(start, startString);
-   myWalker.getSet(start, RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,50));
+
+   float saturation = .5;
+   float overS = 1.2;
+
+   /*cout << "random walker test cases" << endl;
+   cout << RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,50) << endl;
+   cout << RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,50, .01f) << endl;
+
+   cout << RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,saturation) << endl;
+   cout << RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE, overS, .7) << endl;*/
+
+
+   //swansonInput::yesNo("continue");
+
+  // myWalker.getSet(start, RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,50));
+   myWalker.getSet
+   (start, RandomWalker::GetWalkString(WORLD_SIZE*WORLD_SIZE,saturation));
 
 
 
