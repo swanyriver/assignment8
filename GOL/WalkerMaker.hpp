@@ -17,7 +17,6 @@
 #include "../SwansonLibs/swansonString.hpp"
 #include "../SwansonLibs/swansonUtils.hpp"
 
-#include <iostream> //todo remove, its for testing
 
 using namespace std; //todo find needed refrences to this
 
@@ -76,6 +75,7 @@ public:
    }
 
    void getGliderWorld(GOL::LivingCellStartSet &cellSet);
+   static const string Tumbler;
 };
 
 ///outside definitions
@@ -98,6 +98,42 @@ const string Walker::glider = swansonString::UpperCase(
       swansonString::GetString(Walker::East) +
       swansonString::GetString(Walker::North) +
       swansonString::GetString(Walker::North));
+
+const string Walker::Tumbler =
+      swansonString::GetString(Walker::West) +
+      swansonString::GetString(Walker::West) +
+
+      swansonString::UpperCase(
+     swansonString::GetString(Walker::SW) +
+     swansonString::GetString(Walker::South) +
+     swansonString::GetString(Walker::South) +
+     swansonString::GetString(Walker::East) +
+     swansonString::GetString(Walker::NE) +
+     swansonString::GetString(Walker::North) +
+     swansonString::GetString(Walker::North) +
+     swansonString::GetString(Walker::North) +
+     swansonString::GetString(Walker::North) +
+     swansonString::GetString(Walker::West) +
+     swansonString::GetString(Walker::South))+
+
+     swansonString::GetString(Walker::East) +
+     swansonString::GetString(Walker::East) +
+     swansonString::GetString(Walker::East) +
+     //swansonString::GetString(Walker::West) +
+
+     swansonString::UpperCase(
+     swansonString::GetString(Walker::East) +
+     swansonString::GetString(Walker::North) +
+     swansonString::GetString(Walker::West) +
+     swansonString::GetString(Walker::South) +
+     swansonString::GetString(Walker::South) +
+     swansonString::GetString(Walker::South) +
+     swansonString::GetString(Walker::South) +
+     swansonString::GetString(Walker::SE) +
+     swansonString::GetString(Walker::East) +
+     swansonString::GetString(Walker::North) +
+     swansonString::GetString(Walker::North));
+
 
 
 //todo add glider width and height
@@ -192,7 +228,6 @@ void Walker::getGliderWorld(GOL::LivingCellStartSet &cellSet){
 
    GliderWorld.append(1,terminate);
 
-   cout << "GliderWorkd:" << GliderWorld << endl;
 
    this->getSet(cellSet,GliderWorld);
 
