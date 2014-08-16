@@ -21,7 +21,7 @@ typedef list<string> Chronicle;
 string outputWorldINT ( WorldDisplayInterface* display ,
       int height = WORLD_HEIGHT );
 
-int repeatCheck(Chronicle chrono, string world);
+int repeatCheck(const Chronicle &chrono);
 
 
 int main(){
@@ -35,6 +35,8 @@ int main(){
 
    Chronicle WorldStates;
    string worldNow;
+   bool NowRepeating;
+   int RepeatPeriod = 0;
 
    //random world
    int max = WORLD_HEIGHT*WORLD_WIDTH;
@@ -55,8 +57,6 @@ int main(){
          (WORLD_WIDTH/2)-5,WORLD_HEIGHT/2);*/
 
 
-   genesis.clear();
-      myCreator.getSet(genesis,Walker::Tumbler,WORLD_WIDTH/2,WORLD_HEIGHT/2);
 
 
 
@@ -73,10 +73,30 @@ int main(){
       if(WorldStates.size()>MAX_PERIODS_STORED) WorldStates.pop_front();
 
       cout << worldNow << endl
-            << "GENERATIONS PASSED:" << myGod.GenerationsPassed()
-            << "    matches generation ago:"
-            <<repeatCheck(WorldStates,worldNow)
-            << "      generations checked:" << WorldStates.size();
+            << "GENERATIONS PASSED:" << myGod.GenerationsPassed();
+
+
+      if(!NowRepeating){
+         RepeatPeriod = repeatCheck(WorldStates);
+         if(RepeatPeriod != 0) NowRepeating = true;
+      }
+
+
+      if(NowRepeating){
+         switch (RepeatPeriod) {
+            case 1:
+               cout << " the world is now Still-Life";
+               break;
+            case 2:
+               cout << " the world is now Oscillating between two states";
+               break;
+            default:
+               cout << " the World is in a repeating pattern with a period of "
+                  << RepeatPeriod;
+               break;
+         }
+      }
+
       cout.flush();
 
 
@@ -109,8 +129,9 @@ string outputWorldINT ( WorldDisplayInterface* display , int height ){
    return output;
 }
 
-int repeatCheck(Chronicle chrono, string world){
-   for(Chronicle::reverse_iterator it=++(chrono.rbegin());
+int repeatCheck(const Chronicle &chrono){
+   string world = chrono.back();
+   for(Chronicle::const_reverse_iterator it=++(chrono.rbegin());
          it!= chrono.rend(); it++){
       if(*it == world){
          //return distance(it,chrono.rbegin());
