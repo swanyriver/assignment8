@@ -96,7 +96,6 @@ void generation (int *pThisGen, int *pNextGen){
 
 
 
-   //todo double check this assignment
 
 }
 
@@ -143,7 +142,7 @@ int main () {
          sortedCords.insert(neighbors[i]);
       }
 
-      //this format should work,  todo move to final implementation
+      //this format should work,
       string output;
       GOL::cordinate lastCord = GOL::GetCord(-1,0);
       output.append(10,'-'); output+='\n';
@@ -283,7 +282,7 @@ void MapTesting(){
 /***********************************************************
  * OUTPUT ALGORITHM
  *
-//this format should work,  todo move to final implementation
+//this format should work,
    string output;
    GOL::cordinate lastCord = GOL::GetCord(-1,0);
    for(cordSet::iterator it= sortedCords.begin(); it!= sortedCords.end(); it++){

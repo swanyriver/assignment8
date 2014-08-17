@@ -48,8 +48,6 @@ protected:
 
 public:
 
-
-
    MapSetWorld
    ( int width , int height , GOL::LivingCellStartSet start ) :
          WORLD(width,height,start){
@@ -103,17 +101,16 @@ public:
       GOL::cordinate mooreNB[8];
 
       for(cordSet::iterator st = pThisGen->begin(); st!=pThisGen->end();st++){
-         //todo change to a passed in array, avoid extra memory allocation
          YourNeighbors(*st,mooreNB);
 
-         for(int i=0; i<8; i++){ //increment all of the moore neighborhood
+         for(int i=0; i<8; i++){
+            //increment all of the moore neighborhood
             //insertion is only successful if key not already in map
-            //if key(cord) exist in map, retuned iterator points to value
+            //if key(cord) exist in map, returned iterator points to value
             //this indicates a cell with at least one other neighbor
             pair<neighborMap::iterator,bool> element =
                   mNeigborNums.insert(NbCountPair(mooreNB[i], 0));
             //new element made to 1, or element incremented
-            //*(element.first)=1;
             element.first->second++;
 
          }
@@ -129,6 +126,10 @@ public:
       pNextGen->clear();
    }
 
+
+   ////////////////////////////
+   //called by ANGLE //////////
+   ////////////////////////////
 
    //called by Angel after Calculations
    void Live ( const GOL::cordinate &loc ){
