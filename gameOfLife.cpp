@@ -65,17 +65,17 @@ int main(){
    WorldDisplayInterface *VoiceOfGod = myGod.GetWorldDisplayInt();
 
    while(VoiceOfGod->NumLiving()!=0){
-      swansonUtil::ClearScreen(); //todo change to pointer for -s simple
-      //todo why is it not clearing the screen
       worldNow = outputWorldINT(VoiceOfGod);
 
-      WorldStates.push_back(worldNow);
-      if(WorldStates.size()>MAX_PERIODS_STORED) WorldStates.pop_front();
 
-      cout << worldNow << endl
+
+      cout  << string(22, '\n') << worldNow
             << "GENERATIONS PASSED:" << myGod.GenerationsPassed();
 
 
+      //checking for repeat state
+      WorldStates.push_back(worldNow);
+      if(WorldStates.size()>MAX_PERIODS_STORED) WorldStates.pop_front();
       if(!NowRepeating){
          RepeatPeriod = repeatCheck(WorldStates);
          if(RepeatPeriod != 0) NowRepeating = true;
