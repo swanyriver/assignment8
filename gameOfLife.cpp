@@ -105,6 +105,7 @@ int main(){
       myGod.Generation();
    }
 
+   //todo clean up this output
    cout << "there is now no more life in this world";
 
 }
