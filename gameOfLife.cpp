@@ -32,6 +32,20 @@ const string INTRO = "\n\nWelcome to Brandon Swanson's Game of Life"
       "\nHold down enter to watch the generations zoom by"
       "\nPress 'q' and enter to exit simulation\n\n";
 
+const string WALK_EXP = "\n\n\n"
+      "You can input manually using the below keys to move a cursor"
+      " around the world"
+      "\nUppercase indicates cursor on, and lower case off\nwith living cells"
+      " marked at the spot moved to"
+      "\n\n"
+      "        q   w  e  \n"
+      "        a      d  \n"
+      "        z   s  c  \n"
+      "\nYour cursor will start at the middle of the screen"
+      "\nUse ! to indicate that you are finished marking live cells"
+      "\n\nas an example a single glider can be made with: WCSAA!"
+      "\nand a bi-block with ASDWdDDSA! ";
+
 Menu mainMenu(INTRO);
 Menu preDefMenu("Please Select one of these pre-defined starting worlds");
 
@@ -75,8 +89,7 @@ void quit(){
 }
 
 void userGen(){
-   //todo explain input
-   //todo check if ready
+   cout << WALK_EXP << endl;
    //todo possibly update display
    genesis.clear();
    myCreator.getSet(genesis, cin, WORLD_WIDTH/2, WORLD_HEIGHT/2);
