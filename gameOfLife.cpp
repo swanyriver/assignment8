@@ -61,10 +61,17 @@ const string WALK_EXP = "\n\n\n"
 Menu mainMenu(INTRO);
 Menu preDefMenu("Please Select one of these pre-defined starting worlds");
 
-//menu functions
+
+////////////////////////////////////////////////////////////////////////////
+////////////////MENU OPTIONS////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+//shows options for pre-defined world
 void preDefShow(){
    preDefMenu.showMenu();
 }
+
+//create a random world
 void randomCells(){
    genesis.clear();
    int max = WORLD_HEIGHT*WORLD_WIDTH;
@@ -72,11 +79,14 @@ void randomCells(){
          WORLD_WIDTH/2,WORLD_HEIGHT/2);
 }
 
+//creates a world filled with gliders
 void pdGliderWorld(){
    genesis.clear();
    myCreator.getGliderWorld(genesis);
 }
 
+//creates a world with 2 gliders close to edge
+//to demonstrate world wrap around
 void pdEdgeGliders(){
    genesis.clear();
    myCreator.getSet(genesis,Walker::glider,
@@ -85,21 +95,20 @@ void pdEdgeGliders(){
          WORLD_WIDTH/2,WORLD_HEIGHT-Walker::GLIDER_SIZE-2);
 }
 
+//creates a world with a tumbler pattern
 void pdTumbler(){
    genesis.clear();
    myCreator.getSet(genesis,Walker::Tumbler,WORLD_WIDTH/2,WORLD_HEIGHT/2);
 }
 
+//creates a world with 10 cells in a row
 void pdTen(){
    genesis.clear();
    myCreator.getSet(genesis,swansonString::UpperCase(string(10, Walker::East)),
          (WORLD_WIDTH/2)-5,WORLD_HEIGHT/2);
 }
 
-void quit(){
-   leaveProgram = true;
-}
-
+//allows for input from user to create the world
 void userGen(){
    cout << WALK_EXP << endl;
    //todo possibly update display
@@ -108,21 +117,34 @@ void userGen(){
    cin.ignore(1000,'\n');
 }
 
-//Function declarations
+//exits program
+void quit(){
+   leaveProgram = true;
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+/////////////////////FUNCTION DECLARATONS///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 string outputWorldINT ( WorldDisplayInterface* display ,
       int height = WORLD_HEIGHT );
-
 int repeatCheck(const Chronicle &chrono);
-
 void RunSimulation ();
 
 
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////INT MAIN()//////////////////////////////////////////////
+///////initializing variables and defining menu tree////////////////////////
+///////////////////////////////////////////////////////////////////////////
 int main(){
 
    //Initialization activities
    swansonUtil::SeedRandom();
 
    ///menu for starting set
+   //Items are added with a title, and pointer to function
+   //Items are then set to not repeat and to not display an intro
    mainMenu.addItem(new GoItem(preDefShow, "Pre-Defined Worlds", ""));
    mainMenu.GetLastItem()->hasIntro=false;
    mainMenu.GetLastItem()->itemRepeat=false;
@@ -151,6 +173,7 @@ int main(){
    mainMenu.GetLastItem()->hasIntro=false;
    mainMenu.GetLastItem()->itemRepeat=false;
 
+   /////MENU SETTINGS
    mainMenu.menuRepeat=false;
    mainMenu.demoAllItem=false;
    mainMenu.clearScreenON = false;
@@ -162,13 +185,20 @@ int main(){
    preDefMenu.exitMenuItem = false;
 
 
+   ///////////////////////////////////////////////////////////////////////
+   /////////////OPTIONS FOR STARTING WORLD ARE PRESENTED//////////////////
+   /////////////SIMULATION IS RUN/////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////
    while(!leaveProgram){
       mainMenu.showMenu(); //chose starting position
       if(!leaveProgram)RunSimulation(); //run game of life
    }
 
-
 }
+
+////////////////////////////////////////////////////////////////////////////
+/////////////////////FUNCTION DEFINITIONS///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 void RunSimulation () {
    //local variables and objects
@@ -176,14 +206,19 @@ void RunSimulation () {
    string worldNow;
    bool NowRepeating = false;
    int RepeatPeriod = 0;
+
    //pass generated cells to builder and builder to god,  world is born
    God myGod( new MpSWorldBuilder( WORLD_WIDTH , WORLD_HEIGHT , genesis ) );
    WorldDisplayInterface* VoiceOfGod = myGod.GetWorldDisplayInt();
    bool exit = false;
+
+
    while ( !exit ) {
+      //world state is displayed
       worldNow = outputWorldINT( VoiceOfGod );
       cout << string( 22 , '\n' ) << worldNow << "GENERATIONS PASSED:"
             << myGod.GenerationsPassed();
+
       //checking for repeat state
       WorldStates.push_back( worldNow );
       if ( WorldStates.size() > MAX_PERIODS_STORED )
@@ -216,11 +251,16 @@ void RunSimulation () {
       if ( input == QUIT )
          exit = true;
 
+      //generation is advanced
       myGod.Generation();
    }
 }
 
 
+/////////////////////////////////////////////////////
+///USES WORLD DISPLAY INTERFACE//////////////////////
+//////CREATES A STRING TO REPRESENT LIVING CELLS/////
+/////////////////////////////////////////////////////
 
 string outputWorldINT ( WorldDisplayInterface* display , int height ){
    string output;
@@ -241,12 +281,14 @@ string outputWorldINT ( WorldDisplayInterface* display , int height ){
    return output;
 }
 
+/////////////////////////////////////////////////////
+////COMPARES CURENT GENERATION TO PREVIOUS///////////
+/////////////////////////////////////////////////////
 int repeatCheck(const Chronicle &chrono){
    string world = chrono.back();
    for(Chronicle::const_reverse_iterator it=++(chrono.rbegin());
          it!= chrono.rend(); it++){
       if(*it == world){
-         //return distance(it,chrono.rbegin());
          return distance(chrono.rbegin(),it);
       }
    }
