@@ -1,4 +1,14 @@
-//put header here
+/***********************************************************
+ *
+ * * Author: Brandon Swanson
+ *
+* * Date Created: 08-10-2014
+ *
+ * * Last Modification Date: 08-17-2014
+ *
+ * * Filename:gameOfLife.cpp
+ * *
+ * ***********************************************************/
 
 #include <iostream>
 #include <cstdio>
@@ -8,10 +18,12 @@
 #include "GOL/GameOfLife.hpp"
 #include "GOL/God.hpp"
 #include "GOL/WalkerMaker.hpp"
-//#include "GOL/WorldTools.hpp"
+#include "GOL/WorldTools.hpp"
 #include "GOL/MapSetWorld.hpp"
 #include <list>
 #include <cstdlib>
+
+#define NDEBUG //to stop assertion checking
 
 const int WORLD_WIDTH = 80;
 const int WORLD_HEIGHT = 22;

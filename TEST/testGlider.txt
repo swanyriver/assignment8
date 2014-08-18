@@ -136,7 +136,6 @@ neighbor number
 1    122
 
 --------
-here is the problem
 generation 7 living cells:5
 --------
 
